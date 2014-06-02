@@ -1,0 +1,79 @@
+package uol.cubus.users;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import uol.cubus.AbstractDomain;
+import uol.cubus.exceptions.NotFoundException;
+
+@Entity
+@Table(name = "user_all")
+public class User extends AbstractDomain {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "idt_user_all")
+	private Long id;
+	
+	@Column(name = "nam_login")
+	private String login;
+	
+	@Column(name = "cod_user_status")
+	private Status status;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public static User getNewInstance() {
+		return new User();
+	}
+
+	public static User load(Long id) throws NotFoundException {
+		return UserService.getInstance().findUser(id);
+	}
+
+	public User create() throws NotFoundException {
+		return UserService.getInstance().create(this);
+	}
+
+	public User withId(Long id) {
+		this.setId(id);
+		return this;
+	}
+
+	public User withLogin(String login) {
+		this.setLogin(login);
+		return this;
+	}
+
+	public User withStatus(Character status) {
+		this.setStatus(new Status(status));
+		return this;
+	}
+
+}

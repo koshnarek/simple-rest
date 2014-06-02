@@ -1,0 +1,38 @@
+package uol.cubus;
+
+import java.lang.reflect.InvocationTargetException;
+
+import javax.xml.bind.annotation.XmlElement;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import uol.cubus.exceptions.DTOConstructionException;
+
+public class AbstractDTO<T> {
+
+	@XmlElement
+	protected LinkDTO link;
+
+	public void populateFrom(T domain) {
+		try {
+			BeanUtils.copyProperties(this, domain);
+		} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+			throw new DTOConstructionException(this, domain, e);
+		}
+	}
+	
+	public LinkDTO getLink() {
+		return link;
+	}
+
+	public void setLink(String path) {
+		this.link = new LinkDTO(path);
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+}
