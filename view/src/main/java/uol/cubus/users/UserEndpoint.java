@@ -19,9 +19,9 @@ public class UserEndpoint {
 	@Path(UserURI.USER)
 	//@HeaderParam("X-version") Integer version
 	public ResourceDTO getUser(@PathParam(UserURI.USER_ID) Long userId) throws NotFoundException {
-		User user = User.load(userId);
-		UserDTO userDTO = UserDTO.getFrom(user);
-		return ResourceDTO.fromDTO(userDTO);
+		User user = User.find(userId);
+		UserDTO userDTO = UserDTO.getInstanceFrom(user);
+		return ResourceDTO.getInstanceFrom(userDTO);
 		// return ResourceDTO.fromDTOs(Arrays.asList(userDTO), 1, 10);
 	}
 }

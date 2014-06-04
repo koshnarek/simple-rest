@@ -17,7 +17,7 @@ public class AlreadyExistsExceptionMapper implements ExceptionMapper<AlreadyExis
 	public Response toResponse(AlreadyExistsException e) {
 		return Response
 				.status(HttpServletResponse.SC_CONFLICT)
-				.entity(ResourceDTO.fromDTO(ErrorDTO.fromException(e)))
+				.entity(ResourceDTO.getInstanceFrom(ErrorDTO.fromException(e)))
 				.type(MediaType.APPLICATION_JSON)
 				.build();
 	}

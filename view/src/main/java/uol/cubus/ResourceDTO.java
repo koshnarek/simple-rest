@@ -59,15 +59,20 @@ public class ResourceDTO {
 		return this;
 	}
 
-	public static ResourceDTO fromDTO(AbstractDTO<?> item) {
+	public static ResourceDTO getInstanceFrom(AbstractDTO<?> item) {
 		ResourceDTO resourceDTO = new ResourceDTO();
 		resourceDTO.setItem(item);
 		return resourceDTO;
 	}
-
-	public static ResourceDTO fromDTOs(Collection<AbstractDTO<?>> items, int page, int size) {
+	
+	public static ResourceDTO getInstanceFrom(Collection<AbstractDTO<?>> items) {
 		ResourceDTO resourceDTO = new ResourceDTO();
 		resourceDTO.setItems(items);
+		return resourceDTO;
+	}
+
+	public static ResourceDTO getInstanceFrom(Collection<AbstractDTO<?>> items, int page, int size) {
+		ResourceDTO resourceDTO = ResourceDTO.getInstanceFrom(items);
 		String href = items.stream().findFirst().get().getLink().getHref().replace(LinkDTO.BASE_URI, "");
 		resourceDTO.addLink(LinkDTO.NEXT, String.format(LinkDTO.PAGEABLE_QUERY, href, page++, size));
 		resourceDTO.addLink(LinkDTO.PREVIOUS, String.format(LinkDTO.PAGEABLE_QUERY, href, page--, size));

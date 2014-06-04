@@ -43,7 +43,7 @@ public class UserDTO extends AbstractDTO<User> {
 		this.status = status;
 	}
 
-	public static UserDTO getFrom(User user) {
+	public static UserDTO getInstanceFrom(User user) {
 		UserDTO userDTO = new UserDTO();
 		userDTO.populateFrom(user);
 		userDTO.setStatus((user != null && user.getStatus() != null) ? user.getStatus().getCode() : null);

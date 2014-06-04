@@ -22,7 +22,7 @@ public class UserBuilderTest {
 				.withLogin(login)
 				.withStatus(status);
 
-		UserDTO userDTO = UserDTO.getFrom(user);
+		UserDTO userDTO = UserDTO.getInstanceFrom(user);
 
 		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object(){}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
 
@@ -38,7 +38,7 @@ public class UserBuilderTest {
 				.withLogin(login)
 				.withStatus(null);
 
-		UserDTO userDTO = UserDTO.getFrom(user);
+		UserDTO userDTO = UserDTO.getInstanceFrom(user);
 		
 		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object(){}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
 
@@ -54,7 +54,7 @@ public class UserBuilderTest {
 				.withLogin(null)
 				.withStatus(status);
 
-		UserDTO userDTO = UserDTO.getFrom(user);
+		UserDTO userDTO = UserDTO.getInstanceFrom(user);
 		
 		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object(){}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
 
@@ -70,7 +70,7 @@ public class UserBuilderTest {
 				.withLogin(login)
 				.withStatus(status);
 
-		UserDTO userDTO = UserDTO.getFrom(user);
+		UserDTO userDTO = UserDTO.getInstanceFrom(user);
 		
 		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object(){}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
 
@@ -82,13 +82,13 @@ public class UserBuilderTest {
 	@Test
 	public void shouldBuildUserDTOFromUserWithoutAllFields() {
 		User user = new User();
-		UserDTO userDTO = UserDTO.getFrom(user);
+		UserDTO userDTO = UserDTO.getInstanceFrom(user);
 		
 		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object(){}.getClass().getEnclosingMethod().getName(), user, userDTO.toString());
 	}
 
 	@Test(expected = DTOConstructionException.class)
 	public void shouldThrowExceptionFromNullUser() {
-		UserDTO.getFrom(null);
+		UserDTO.getInstanceFrom(null);
 	}
 }
