@@ -5,16 +5,12 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import uol.cubus.AbstractDTO;
 import uol.cubus.shared.LogHolder;
 
-//@XmlRootElement
 public class ErrorDTO extends AbstractDTO<Throwable> {
 
-//	@XmlElement
 	private Integer code;
 
-//	@XmlElement
 	private String message;
 
-//	@XmlElement
 	private String stacktrace;
 
 	public Integer getCode() {

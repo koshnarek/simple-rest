@@ -8,20 +8,19 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import uol.cubus.exceptions.ErrorDTO;
 
-//@XmlRootElement
 public class ResourceDTO {
 
-	// @XmlElement
 	private AbstractDTO<?> item;
 
-	// @XmlElement
 	private ErrorDTO error;
 
-	// @XmlElement
 	private Collection<AbstractDTO<?>> items;
 
-	// @XmlElement
 	private Collection<LinkDTO> links;
+
+	public Collection<LinkDTO> getLinks() {
+		return links;
+	}
 
 	public ErrorDTO getError() {
 		return error;
@@ -34,7 +33,7 @@ public class ResourceDTO {
 	public AbstractDTO<?> getItem() {
 		return this.item;
 	}
-	
+
 	public void setItem(AbstractDTO<?> item) {
 		if (item instanceof ErrorDTO) {
 			this.setError((ErrorDTO) item);
@@ -42,7 +41,7 @@ public class ResourceDTO {
 			this.item = item;
 		}
 	}
-	
+
 	public Collection<AbstractDTO<?>> getItems() {
 		return items;
 	}
@@ -64,18 +63,20 @@ public class ResourceDTO {
 		resourceDTO.setItem(item);
 		return resourceDTO;
 	}
-	
+
 	public static ResourceDTO getInstanceFrom(Collection<AbstractDTO<?>> items) {
 		ResourceDTO resourceDTO = new ResourceDTO();
 		resourceDTO.setItems(items);
 		return resourceDTO;
 	}
 
-	public static ResourceDTO getInstanceFrom(Collection<AbstractDTO<?>> items, int page, int size) {
+	public static ResourceDTO getInstanceFrom(Collection<AbstractDTO<?>> items, int page, boolean hasNext, boolean hasPrevious) {
 		ResourceDTO resourceDTO = ResourceDTO.getInstanceFrom(items);
 		String href = items.stream().findFirst().get().getLink().getHref().replace(LinkDTO.BASE_URI, "");
-		resourceDTO.addLink(LinkDTO.NEXT, String.format(LinkDTO.PAGEABLE_QUERY, href, page++, size));
-		resourceDTO.addLink(LinkDTO.PREVIOUS, String.format(LinkDTO.PAGEABLE_QUERY, href, page--, size));
+		if (hasNext)
+			resourceDTO.addLink(LinkDTO.NEXT, String.format(LinkDTO.PAGEABLE_QUERY, href, page + 1, items.size()));
+		if (hasPrevious)
+			resourceDTO.addLink(LinkDTO.PREVIOUS, String.format(LinkDTO.PAGEABLE_QUERY, href, page - 1, items.size()));
 		return resourceDTO;
 	}
 

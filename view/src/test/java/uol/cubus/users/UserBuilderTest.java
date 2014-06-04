@@ -24,7 +24,8 @@ public class UserBuilderTest {
 
 		UserDTO userDTO = UserDTO.getInstanceFrom(user);
 
-		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object(){}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
+		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object() {
+		}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
 
 		assertThat(userDTO.getId(), is(id));
 		assertThat(userDTO.getLogin(), is(login));
@@ -39,14 +40,15 @@ public class UserBuilderTest {
 				.withStatus(null);
 
 		UserDTO userDTO = UserDTO.getInstanceFrom(user);
-		
-		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object(){}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
+
+		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object() {
+		}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
 
 		assertThat(userDTO.getId(), is(id));
 		assertThat(userDTO.getLogin(), is(login));
 		assertThat(userDTO.getStatus(), is(nullValue()));
 	}
-	
+
 	@Test
 	public void shouldBuildUserDTOFromUserWithNullLogin() {
 		User user = User.getNewInstance()
@@ -55,14 +57,15 @@ public class UserBuilderTest {
 				.withStatus(status);
 
 		UserDTO userDTO = UserDTO.getInstanceFrom(user);
-		
-		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object(){}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
+
+		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object() {
+		}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
 
 		assertThat(userDTO.getId(), is(id));
 		assertThat(userDTO.getLogin(), is(nullValue()));
 		assertThat(userDTO.getStatus(), is(status));
 	}
-	
+
 	@Test
 	public void shouldBuildUserDTOFromUserWithNullId() {
 		User user = User.getNewInstance()
@@ -71,8 +74,9 @@ public class UserBuilderTest {
 				.withStatus(status);
 
 		UserDTO userDTO = UserDTO.getInstanceFrom(user);
-		
-		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object(){}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
+
+		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object() {
+		}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
 
 		assertThat(userDTO.getId(), is(nullValue()));
 		assertThat(userDTO.getLogin(), is(login));
@@ -83,8 +87,9 @@ public class UserBuilderTest {
 	public void shouldBuildUserDTOFromUserWithoutAllFields() {
 		User user = new User();
 		UserDTO userDTO = UserDTO.getInstanceFrom(user);
-		
-		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object(){}.getClass().getEnclosingMethod().getName(), user, userDTO.toString());
+
+		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object() {
+		}.getClass().getEnclosingMethod().getName(), user, userDTO.toString());
 	}
 
 	@Test(expected = DTOConstructionException.class)
