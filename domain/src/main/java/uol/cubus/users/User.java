@@ -6,8 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import uol.cubus.AbstractDomain;
+import uol.cubus.exceptions.AlreadyExistsException;
 import uol.cubus.exceptions.NotFoundException;
 
 @Entity
@@ -18,10 +20,10 @@ public class User extends AbstractDomain {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "idt_user_all")
 	private Long id;
-	
+
 	@Column(name = "nam_login")
 	private String login;
-	
+
 	@Column(name = "cod_user_status")
 	private Status status;
 
@@ -53,11 +55,13 @@ public class User extends AbstractDomain {
 		return new User();
 	}
 
-	public static User load(Long id) throws NotFoundException {
-		return UserService.getInstance().findUser(id);
+	public static User load(@NotNull Long id) throws NotFoundException {
+		return (new User()).withId(id);
+		// return UserService.getInstance().findUser(id);
+		//throw new NotFoundException(UserError.NOT_FOUND.withId(id));
 	}
 
-	public User create() throws NotFoundException {
+	public User create() throws AlreadyExistsException {
 		return UserService.getInstance().create(this);
 	}
 

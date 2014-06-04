@@ -4,7 +4,8 @@ import uol.cubus.Error;
 
 public enum UserError implements Error<Long> {
 
-	NOT_FOUND(404001, "user %s not found");
+	NOT_FOUND(1, "user %s not found"),
+	ALREADY_EXISTS(2, "user %s already exists");
 
 	private Integer code;
 

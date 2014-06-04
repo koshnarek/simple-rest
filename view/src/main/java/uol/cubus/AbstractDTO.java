@@ -2,9 +2,9 @@ package uol.cubus;
 
 import java.lang.reflect.InvocationTargetException;
 
-import javax.xml.bind.annotation.XmlElement;
-
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -12,7 +12,7 @@ import uol.cubus.exceptions.DTOConstructionException;
 
 public class AbstractDTO<T> {
 
-	@XmlElement
+	//@XmlElement
 	protected LinkDTO link;
 
 	public void populateFrom(T domain) {
@@ -35,4 +35,16 @@ public class AbstractDTO<T> {
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
+
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
+	
+	
 }

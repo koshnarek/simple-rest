@@ -1,23 +1,20 @@
 package uol.cubus.exceptions;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import uol.cubus.AbstractDTO;
 import uol.cubus.shared.LogHolder;
 
-@XmlRootElement
+//@XmlRootElement
 public class ErrorDTO extends AbstractDTO<Throwable> {
 
-	@XmlElement
+//	@XmlElement
 	private Integer code;
 
-	@XmlElement
+//	@XmlElement
 	private String message;
 
-	@XmlElement
+//	@XmlElement
 	private String stacktrace;
 
 	public Integer getCode() {

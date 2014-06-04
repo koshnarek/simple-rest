@@ -3,39 +3,48 @@ package uol.cubus;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import uol.cubus.exceptions.ErrorDTO;
 
-@XmlRootElement
+//@XmlRootElement
 public class ResourceDTO {
 
-	@XmlElement
+	// @XmlElement
 	private AbstractDTO<?> item;
 
-	@XmlElement
+	// @XmlElement
 	private ErrorDTO error;
 
-	@XmlElement
+	// @XmlElement
 	private Collection<AbstractDTO<?>> items;
 
-	@XmlElement
+	// @XmlElement
 	private Collection<LinkDTO> links;
+
+	public ErrorDTO getError() {
+		return error;
+	}
+
+	public void setError(ErrorDTO error) {
+		this.error = error;
+	}
 
 	public AbstractDTO<?> getItem() {
 		return this.item;
 	}
-
+	
 	public void setItem(AbstractDTO<?> item) {
 		if (item instanceof ErrorDTO) {
-			this.error = (ErrorDTO) item;
+			this.setError((ErrorDTO) item);
 		} else {
 			this.item = item;
 		}
+	}
+	
+	public Collection<AbstractDTO<?>> getItems() {
+		return items;
 	}
 
 	public void setItems(Collection<AbstractDTO<?>> items) {
@@ -69,5 +78,4 @@ public class ResourceDTO {
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
-
 }

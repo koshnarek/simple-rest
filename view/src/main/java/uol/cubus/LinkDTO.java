@@ -1,12 +1,9 @@
 package uol.cubus;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-@XmlRootElement
+//@XmlRootElement
 public class LinkDTO {
 
 	public static String BASE_URI = "/rs";
@@ -24,10 +21,10 @@ public class LinkDTO {
 		this(SELF, href);
 	}
 
-	@XmlElement
+	//@XmlElement
 	private String rel;
 
-	@XmlElement
+	//@XmlElement
 	private String href;
 
 	public String getRel() {
