@@ -1,5 +1,0 @@
-<aspectj>
-	<weaver options="-verbose">
-		<include within="uol.cubus.*" />
-	</weaver>
-</aspectj> 
