@@ -1,8 +1,9 @@
-package uol.cubus.exceptions;
+package uol.cubus;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
-import uol.cubus.AbstractDTO;
+import uol.cubus.exceptions.AbstractException;
+import uol.cubus.exceptions.InternalException;
 import uol.cubus.shared.LogHolder;
 
 public class ErrorDTO extends AbstractDTO<Throwable> {
@@ -47,7 +48,7 @@ public class ErrorDTO extends AbstractDTO<Throwable> {
 		return errorDTO;
 	}
 
-	public static ErrorDTO fromException(Error e) {
+	public static ErrorDTO fromException(java.lang.Error e) {
 		ErrorDTO errorDTO = new ErrorDTO();
 		errorDTO.setCode(InternalException.CODE);
 		errorDTO.setMessage(e.getMessage());

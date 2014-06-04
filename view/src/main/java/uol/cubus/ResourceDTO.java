@@ -6,8 +6,6 @@ import java.util.Collection;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import uol.cubus.exceptions.ErrorDTO;
-
 public class ResourceDTO {
 
 	private AbstractDTO<?> item;

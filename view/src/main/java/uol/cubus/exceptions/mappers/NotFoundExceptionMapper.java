@@ -5,9 +5,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+import uol.cubus.ErrorDTO;
 import uol.cubus.MediaType;
 import uol.cubus.ResourceDTO;
-import uol.cubus.exceptions.ErrorDTO;
 import uol.cubus.exceptions.NotFoundException;
 
 @Provider

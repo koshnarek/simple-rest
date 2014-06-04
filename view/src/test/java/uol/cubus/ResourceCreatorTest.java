@@ -13,7 +13,6 @@ import java.util.Collection;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
-import uol.cubus.exceptions.ErrorDTO;
 import uol.cubus.shared.LogHolder;
 import uol.cubus.users.UserDTO;
 import uol.cubus.users.UserURI;

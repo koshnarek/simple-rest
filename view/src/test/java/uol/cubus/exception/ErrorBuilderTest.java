@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import uol.cubus.exceptions.ErrorDTO;
+import uol.cubus.ErrorDTO;
 import uol.cubus.exceptions.InternalException;
 import uol.cubus.exceptions.NotFoundException;
 import uol.cubus.shared.LogHolder;
