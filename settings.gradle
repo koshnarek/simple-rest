@@ -1,5 +1,4 @@
 include ':infrastructure'
-include ':domain'
+include ':model'
 include ':service'
 include ':view'
-include ':integration-test'

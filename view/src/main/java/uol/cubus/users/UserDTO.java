@@ -3,20 +3,13 @@ package uol.cubus.users;
 import org.apache.commons.lang3.StringUtils;
 
 import uol.cubus.AbstractDTO;
+import uol.cubus.annotations.Domain;
 
-//@XmlRootElement
-//@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.NONE)
-//@JsonIgnoreProperties(ignoreUnknown = true)
+@Domain(name = "User")
 public class UserDTO extends AbstractDTO<User> {
 
-//	@XmlElement
-//	@JsonProperty("id")
 	private Long id;
-//	@XmlElement
-//	@JsonProperty("login")
 	private String login;
-//	@XmlElement
-//	@JsonProperty("status")
 	private Character status;
 
 	public Long getId() {

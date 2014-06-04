@@ -12,10 +12,9 @@ import uol.cubus.exceptions.DTOConstructionException;
 
 public class AbstractDTO<T> {
 
-	//@XmlElement
 	protected LinkDTO link;
 
-	public void populateFrom(T domain) {
+	protected void populateFrom(T domain) {
 		try {
 			BeanUtils.copyProperties(this, domain);
 		} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
