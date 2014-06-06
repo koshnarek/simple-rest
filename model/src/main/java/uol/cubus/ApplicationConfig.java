@@ -36,7 +36,7 @@ public class ApplicationConfig {
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 		factory.setJpaVendorAdapter(vendorAdapter);
 		factory.setPackagesToScan(getClass().getPackage().getName());
-		factory.setDataSource(dataSource());
+		factory.setDataSource(this.dataSource());
 
 		return factory;
 	}

@@ -21,7 +21,7 @@ public class AbstractDTO<T> {
 			throw new DTOConstructionException(this, domain, e);
 		}
 	}
-	
+
 	public LinkDTO getLink() {
 		return link;
 	}
@@ -44,6 +44,4 @@ public class AbstractDTO<T> {
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
-	
-	
 }

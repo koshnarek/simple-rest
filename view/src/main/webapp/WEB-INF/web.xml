@@ -17,4 +17,12 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 		<servlet-name>CUBUS</servlet-name>
 		<url-pattern>/rs/*</url-pattern>
 	</servlet-mapping>
+	<filter>
+		<filter-name>AccessLoggingFilter</filter-name>
+		<filter-class>uol.cubus.filter.AccessLoggingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AccessLoggingFilter</filter-name>
+		<url-pattern>/rs/*</url-pattern>
+	</filter-mapping>
 </web-app>

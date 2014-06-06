@@ -4,11 +4,17 @@ import org.apache.commons.lang3.StringUtils;
 
 import uol.cubus.AbstractDTO;
 import uol.cubus.annotations.Domain;
+import uol.cubus.annotations.JsonVersion;
+import uol.cubus.filter.VersionFilter;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
 
 @Domain(name = "User")
+@JsonFilter(value = VersionFilter.NAME)
 public class UserDTO extends AbstractDTO<User> {
 
 	private Long id;
+	@JsonVersion(version = 2)
 	private String login;
 	private Character status;
 
