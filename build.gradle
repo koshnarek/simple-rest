@@ -33,6 +33,9 @@ project(':model') {
         compile "org.springframework:spring-aspects:4.0.5.RELEASE"
         compile "org.osgi:org.osgi.core:4.3.0"
         compile "org.springframework.data:spring-data-jpa:1.6.0.RELEASE"
+        compile "org.hibernate:hibernate-entitymanager:4.3.5.Final"
+        compile "com.jolbox:bonecp:0.8.0.RELEASE"
+        compile "com.h2database:h2:1.4.178"
     }
 }
 project(':service') {
@@ -53,5 +56,6 @@ project(':view') {
 		compile "org.glassfish.jersey.core:jersey-client:2.9"
 		compile "org.glassfish.jersey.media:jersey-media-json-jackson:2.9"
 		compile "commons-beanutils:commons-beanutils:1.9.2"
+		compile "org.springframework:spring-web:4.0.5.RELEASE"
     }
 }

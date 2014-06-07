@@ -2,13 +2,48 @@ package simple.users;
 
 import java.util.Arrays;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import simple.statuses.AbstractStatus;
 import simple.users.Status.Type;
 
+@Entity
+@Table(name = "user_status")
 public class Status extends AbstractStatus<Type> {
 
-	public Status(Character code) {
-		this.type = Type.fromCode(code);
+	@Id
+	@Column(name = "cod_status")
+	public Character id;
+
+	@Column(name = "nam_status")
+	public String description;
+
+	public Status() {
+	}
+
+	public Status(Character id) {
+		this.type = Type.fromCode(id);
+		this.id = this.type.getCode();
+		this.description = this.type.name();
+	}
+
+	public Character getId() {
+		return id;
+	}
+
+	public void setId(Character id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public enum Type {

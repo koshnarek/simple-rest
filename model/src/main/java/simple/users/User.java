@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -13,18 +15,19 @@ import simple.exceptions.AlreadyExistsException;
 import simple.exceptions.NotFoundException;
 
 @Entity
-@Table(name = "user_all")
+@Table(name = "user")
 public class User extends AbstractDomain {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "idt_user_all")
+	@Column(name = "idt_user")
 	private Long id;
 
 	@Column(name = "nam_login")
 	private String login;
 
-	@Column(name = "cod_user_status")
+	@ManyToOne
+	@JoinColumn(name="cod_user_status")
 	private Status status;
 
 	public Long getId() {

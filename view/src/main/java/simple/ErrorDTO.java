@@ -56,4 +56,13 @@ public class ErrorDTO extends AbstractDTO<Throwable> {
 		return errorDTO;
 	}
 
+	public static ErrorDTO fromException(RuntimeException e) {
+		ErrorDTO errorDTO = new ErrorDTO();
+		errorDTO.setCode(InternalException.CODE);
+		errorDTO.setMessage(e.getMessage() != null ? e.getMessage() : e.getClass().toString());
+		errorDTO.setStacktrace(e);
+		LogHolder.getLogger().error(e.getMessage(), e);
+		return errorDTO;
+	}
+
 }

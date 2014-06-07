@@ -15,9 +15,4 @@ public abstract class AbstractStatus<T> extends AbstractDomain {
 	public void setType(T type) {
 		this.type = type;
 	}
-
-	public String getDescription() {
-		return this.getType() != null ? this.getType().toString() : null;
-	}
-
 }

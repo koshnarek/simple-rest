@@ -1,5 +1,5 @@
 <aspectj>
 	<weaver options="-verbose">
-		<include within="uol.cubus.*" />
+		<include within="simple.*" />
 	</weaver>
 </aspectj> 
