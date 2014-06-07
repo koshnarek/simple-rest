@@ -56,7 +56,7 @@ public class User extends AbstractDomain {
 	}
 
 	public static User find(@NotNull Long id) throws NotFoundException {
-		return (new User()).withId(id).withLogin("x@x.com");
+		return (new User()).withId(id).withLogin("x@x.com").withStatus('A');
 		//return UserService.getInstance().find(id);
 		//throw new NotFoundException(UserError.NOT_FOUND.withId(id));
 	}

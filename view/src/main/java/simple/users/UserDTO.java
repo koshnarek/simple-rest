@@ -5,8 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 import simple.AbstractDTO;
 import simple.annotations.Domain;
 import simple.annotations.JsonVersion;
+import simple.annotations.JsonVersion.Action;
 import simple.filter.VersionFilter;
-import simple.users.User;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 
@@ -15,8 +15,9 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 public class UserDTO extends AbstractDTO<User> {
 
 	private Long id;
-	@JsonVersion(version = 2)
+	@JsonVersion(action = Action.INCLUDE, version = 2)
 	private String login;
+	@JsonVersion(action = Action.EXCLUDE, version = 3)
 	private Character status;
 
 	public Long getId() {

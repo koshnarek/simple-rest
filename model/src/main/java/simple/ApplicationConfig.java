@@ -17,7 +17,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 @Configuration
 @EnableJpaRepositories
 @EnableLoadTimeWeaving(aspectjWeaving = AspectJWeaving.ENABLED)
-@ComponentScan("uol.cubus")
+@ComponentScan("simple")
 public class ApplicationConfig {
 
 	@Bean

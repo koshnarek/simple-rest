@@ -20,7 +20,6 @@ public class UserEndpointTest {
 	@Test
 	public void shouldGetUser() throws NotFoundException {
 		Long userId = 1L;
-		Integer version = null;
 		UserEndpoint userEndpoint = new UserEndpoint();
 
 		new MockUp<User>() {
@@ -30,7 +29,7 @@ public class UserEndpointTest {
 			}
 		};
 
-		ResourceDTO resourceDTO = userEndpoint.getUser(version, userId);
+		ResourceDTO resourceDTO = userEndpoint.getUser(userId);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
@@ -41,7 +40,6 @@ public class UserEndpointTest {
 	@Test(expected = NotFoundException.class)
 	public void shouldThrowsNotFoundException() throws NotFoundException {
 		Long userId = 1L;
-		Integer version = null;
 		UserEndpoint userEndpoint = new UserEndpoint();
 
 		new MockUp<User>() {
@@ -51,7 +49,7 @@ public class UserEndpointTest {
 			}
 		};
 
-		userEndpoint.getUser(version, userId);
+		userEndpoint.getUser(userId);
 	}
 
 }

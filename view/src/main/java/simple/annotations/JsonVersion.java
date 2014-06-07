@@ -7,11 +7,17 @@ import java.lang.annotation.Target;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotation;
 
-@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD})
+@Target({ ElementType.ANNOTATION_TYPE, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonVersion {
 
+	public enum Action {
+		INCLUDE, EXCLUDE
+	}
+
 	int version();
+
+	Action action();
 
 }

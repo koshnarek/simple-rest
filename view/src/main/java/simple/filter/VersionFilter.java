@@ -1,58 +1,36 @@
 package simple.filter;
 
-import java.lang.reflect.Field;
+import java.io.IOException;
 
-import simple.annotations.JsonVersion;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.ser.PropertyFilter;
-import com.fasterxml.jackson.databind.ser.PropertyWriter;
-
-public class VersionFilter implements PropertyFilter {
+public class VersionFilter implements Filter {
 
 	final public static String NAME = "X-version";
 
-	public static final ThreadLocal<Integer> allowedVersion = new ThreadLocal<Integer>();
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+		// TODO Auto-generated method stub
+	}
 
 	@Override
-	public void serializeAsField(Object pojo, JsonGenerator jgen, SerializerProvider prov, PropertyWriter writer) throws Exception {
-		if (this.isToSerializeAccordingToAllowedVersion(pojo, writer)) {
-			writer.serializeAsField(pojo, jgen, prov);
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		final HttpServletRequest httpRequest = (HttpServletRequest) request;
+		if (httpRequest.getHeader(NAME) != null) {
+			VersionAllowedHolder.getInstance().setVersion(Integer.valueOf(httpRequest.getHeader(NAME)));
 		}
-	}
-
-	private boolean isToSerializeAccordingToAllowedVersion(Object pojo, PropertyWriter writer) {
-		for (Field field : pojo.getClass().getDeclaredFields()) {
-			if ((field.getName().equals(writer.getName())) && (field.isAnnotationPresent(JsonVersion.class))
-					&& (allowedVersion.get() != null)
-					&& (field.getAnnotationsByType(JsonVersion.class)[0].version() > allowedVersion.get())) {
-				return false;
-			}
-		}
-		return true;
+		chain.doFilter(request, response);
+		VersionAllowedHolder.getInstance().remove();
 	}
 
 	@Override
-	public void serializeAsElement(Object elementValue, JsonGenerator jgen, SerializerProvider prov, PropertyWriter writer)
-			throws Exception {
-		writer.serializeAsElement(elementValue, jgen, prov);
+	public void destroy() {
+		// TODO Auto-generated method stub
 	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	public void depositSchemaProperty(PropertyWriter writer, ObjectNode propertiesNode, SerializerProvider provider)
-			throws JsonMappingException {
-		writer.depositSchemaProperty(propertiesNode, provider);
-	}
-
-	@Override
-	public void depositSchemaProperty(PropertyWriter writer, JsonObjectFormatVisitor objectVisitor, SerializerProvider provider)
-			throws JsonMappingException {
-		writer.depositSchemaProperty(objectVisitor);
-	}
-
 }

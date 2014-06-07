@@ -4,6 +4,7 @@ import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
 import simple.filter.VersionFilter;
+import simple.filter.VersionSerializerFilter;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,7 +29,7 @@ public class JacksonObjectMapperProvider implements ContextResolver<ObjectMapper
 		final ObjectMapper result = new ObjectMapper();
 		result.enable(SerializationFeature.INDENT_OUTPUT)
 				.setSerializationInclusion(Include.NON_NULL)
-				.setFilters(new SimpleFilterProvider().addFilter(VersionFilter.NAME, new VersionFilter()));
+				.setFilters(new SimpleFilterProvider().addFilter(VersionFilter.NAME, new VersionSerializerFilter()));
 		return result;
 	}
 }

@@ -6,6 +6,6 @@ import org.slf4j.LoggerFactory;
 public class LogHolder {
 
 	public static Logger getLogger() {
-		return LoggerFactory.getLogger("CUBUS");
+		return LoggerFactory.getLogger("SIMPLE");
 	}
 }
