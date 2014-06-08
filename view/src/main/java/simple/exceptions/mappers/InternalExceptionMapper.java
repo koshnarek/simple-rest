@@ -16,7 +16,7 @@ public class InternalExceptionMapper implements ExceptionMapper<Error> {
 	public Response toResponse(Error e) {
 		return Response
 				.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
-				.entity(ResourceDTO.getInstanceFrom(ErrorDTO.fromException(e)))
+				.entity(new ResourceDTO<ErrorDTO>(ErrorDTO.fromException(e)))
 				.type(MediaType.APPLICATION_RESOURCE_JSON)
 				.build();
 	}

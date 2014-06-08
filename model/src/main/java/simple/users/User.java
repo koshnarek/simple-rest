@@ -1,5 +1,9 @@
 package simple.users;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,12 +15,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import simple.AbstractDomain;
+import simple.Salvable;
 import simple.exceptions.AlreadyExistsException;
 import simple.exceptions.NotFoundException;
 
 @Entity
 @Table(name = "user")
-public class User extends AbstractDomain {
+public class User extends AbstractDomain<UserDTO> implements Salvable<User> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,8 +31,8 @@ public class User extends AbstractDomain {
 	@Column(name = "nam_login")
 	private String login;
 
-	@ManyToOne
-	@JoinColumn(name="cod_user_status")
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "cod_user_status")
 	private Status status;
 
 	public Long getId() {
@@ -46,12 +51,15 @@ public class User extends AbstractDomain {
 		this.login = login;
 	}
 
-	public Status getStatus() {
-		return status;
+	public Character getStatus() {
+		if (status != null) {
+			return status.getCode();
+		}
+		return null;
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setStatus(Character code) {
+		this.status = new Status(code);
 	}
 
 	public static User getNewInstance() {
@@ -59,12 +67,14 @@ public class User extends AbstractDomain {
 	}
 
 	public static User find(@NotNull Long id) throws NotFoundException {
-		return (new User()).withId(id).withLogin("x@x.com").withStatus('A');
-		//return UserService.getInstance().find(id);
-		//throw new NotFoundException(UserError.NOT_FOUND.withId(id));
+		return UserService.getInstance().find(id);
 	}
 
-	public User create() throws AlreadyExistsException {
+	public static Collection<User> findAll(Integer page) {
+		return UserService.getInstance().findAll(page);
+	}
+
+	public User save() throws AlreadyExistsException {
 		return UserService.getInstance().create(this);
 	}
 
@@ -79,8 +89,20 @@ public class User extends AbstractDomain {
 	}
 
 	public User withStatus(Character status) {
-		this.setStatus(new Status(status));
+		this.status = new Status(status);
 		return this;
+	}
+
+	public static User getNewInstanceFromDTO(UserDTO userDTO) {
+		User user = new User();
+		user.populateFrom(userDTO);
+		return user;
+	}
+
+	public static Collection<User> getNewInstanceFromDTOs(Collection<UserDTO> userDTOs) {
+		Collection<User> users = new ArrayList<User>(userDTOs.size());
+		userDTOs.forEach(userDTO -> users.add(User.getNewInstanceFromDTO(userDTO)));
+		return users;
 	}
 
 }

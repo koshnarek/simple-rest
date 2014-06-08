@@ -13,21 +13,17 @@ import java.util.Collection;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
-import simple.AbstractDTO;
-import simple.ErrorDTO;
-import simple.LinkDTO;
-import simple.ResourceDTO;
 import simple.shared.LogHolder;
 import simple.users.UserDTO;
 import simple.users.UserURI;
 
-public class ResourceCreatorTest {
+public class ResourceDTOTest {
 
 	@Test
 	public void shouldBuildResourceDTOFromDTO() {
 		UserDTO userDTO = new UserDTO();
 
-		ResourceDTO resourceDTO = ResourceDTO.getInstanceFrom(userDTO);
+		ResourceDTO<UserDTO> resourceDTO = new ResourceDTO<UserDTO>(userDTO);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
@@ -42,7 +38,7 @@ public class ResourceCreatorTest {
 	public void shouldBuildResourceDTOFromErrorDTO() {
 		ErrorDTO errorDTO = new ErrorDTO();
 
-		ResourceDTO resourceDTO = ResourceDTO.getInstanceFrom(errorDTO);
+		ResourceDTO<ErrorDTO> resourceDTO = new ResourceDTO<ErrorDTO>(errorDTO);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
@@ -55,9 +51,8 @@ public class ResourceCreatorTest {
 
 	@Test
 	public void shouldBuildResourceDTOFromCollectionOfDTOs() {
-		Collection<AbstractDTO<?>> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
-
-		ResourceDTO resourceDTO = ResourceDTO.getInstanceFrom(userDTOs);
+		Collection<UserDTO> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
+		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
@@ -73,12 +68,12 @@ public class ResourceCreatorTest {
 		String link = StringUtils.replace(UserURI.USER, "{" + UserURI.USER_ID + "}", String.valueOf(1));
 		LinkDTO previous = new LinkDTO("previous", String.format(LinkDTO.PAGEABLE_QUERY, link, 1, 3));
 		LinkDTO next = new LinkDTO("next", String.format(LinkDTO.PAGEABLE_QUERY, link, 3, 3));
-		Collection<AbstractDTO<?>> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
+		Collection<UserDTO> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
 		userDTOs.stream().forEach(
 				userDTO -> userDTO.setLink(link));
 		Integer page = 2;
 
-		ResourceDTO resourceDTO = ResourceDTO.getInstanceFrom(userDTOs, page, true, true);
+		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs, page, true, true);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
@@ -95,12 +90,12 @@ public class ResourceCreatorTest {
 		String link = StringUtils.replace(UserURI.USER, "{" + UserURI.USER_ID + "}", String.valueOf(1));
 		LinkDTO previous = new LinkDTO("previous", String.format(LinkDTO.PAGEABLE_QUERY, link, 1, 3));
 		LinkDTO next = new LinkDTO("next", String.format(LinkDTO.PAGEABLE_QUERY, link, 3, 3));
-		Collection<AbstractDTO<?>> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
+		Collection<UserDTO> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
 		userDTOs.stream().forEach(
 				userDTO -> userDTO.setLink(link));
 		Integer page = 2;
 
-		ResourceDTO resourceDTO = ResourceDTO.getInstanceFrom(userDTOs, page, false, true);
+		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs, page, false, true);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
@@ -118,12 +113,12 @@ public class ResourceCreatorTest {
 		String link = StringUtils.replace(UserURI.USER, "{" + UserURI.USER_ID + "}", String.valueOf(1));
 		LinkDTO previous = new LinkDTO("previous", String.format(LinkDTO.PAGEABLE_QUERY, link, 1, 3));
 		LinkDTO next = new LinkDTO("next", String.format(LinkDTO.PAGEABLE_QUERY, link, 3, 3));
-		Collection<AbstractDTO<?>> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
+		Collection<UserDTO> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
 		userDTOs.stream().forEach(
 				userDTO -> userDTO.setLink(link));
 		Integer page = 2;
 
-		ResourceDTO resourceDTO = ResourceDTO.getInstanceFrom(userDTOs, page, true, false);
+		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs, page, true, false);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
@@ -139,12 +134,12 @@ public class ResourceCreatorTest {
 	@Test
 	public void shouldBuildResourceDTOFromCollectionOfDTOsWithPageableLinksWithoutLinks() {
 		String link = StringUtils.replace(UserURI.USER, "{" + UserURI.USER_ID + "}", String.valueOf(1));
-		Collection<AbstractDTO<?>> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
+		Collection<UserDTO> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
 		userDTOs.stream().forEach(
 				userDTO -> userDTO.setLink(link));
 		Integer page = 2;
 
-		ResourceDTO resourceDTO = ResourceDTO.getInstanceFrom(userDTOs, page, false, false);
+		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs, page, false, false);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());

@@ -16,7 +16,7 @@ public class UnexpectedExceptionMapper implements ExceptionMapper<RuntimeExcepti
 	public Response toResponse(RuntimeException e) {
 		return Response
 				.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
-				.entity(ResourceDTO.getInstanceFrom(ErrorDTO.fromException(e)))
+				.entity(new ResourceDTO<ErrorDTO>(ErrorDTO.fromException(e)))
 				.type(MediaType.APPLICATION_RESOURCE_JSON)
 				.build();
 	}

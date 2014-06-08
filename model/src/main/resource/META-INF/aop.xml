@@ -1,5 +1,0 @@
-<aspectj>
-	<weaver options="-verbose">
-		<include within="simple.*" />
-	</weaver>
-</aspectj> 

@@ -12,7 +12,7 @@ import simple.users.Status.Type;
 
 @Entity
 @Table(name = "user_status")
-public class Status extends AbstractStatus<Type> {
+public class Status extends AbstractStatus<Type, Status> {
 
 	@Id
 	@Column(name = "cod_status")
@@ -25,9 +25,11 @@ public class Status extends AbstractStatus<Type> {
 	}
 
 	public Status(Character id) {
-		this.type = Type.fromCode(id);
-		this.id = this.type.getCode();
-		this.description = this.type.name();
+		if (id != null) {
+			this.type = Type.fromCode(id);
+			this.id = this.type.getCode();
+			this.description = this.type.name();
+		}
 	}
 
 	public Character getId() {

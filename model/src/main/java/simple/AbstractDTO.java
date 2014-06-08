@@ -10,15 +10,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import simple.exceptions.DTOConstructionException;
 
-public class AbstractDTO<T> {
+public abstract class AbstractDTO<T> {
 
 	protected LinkDTO link;
-
-	protected void populateFrom(T domain) {
+	
+	protected void populateFrom(T model) {
 		try {
-			BeanUtils.copyProperties(this, domain);
+			BeanUtils.copyProperties(this, model);
 		} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-			throw new DTOConstructionException(this, domain, e);
+			throw new DTOConstructionException(this, model, e);
 		}
 	}
 

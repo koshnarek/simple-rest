@@ -1,7 +1,12 @@
 package simple.users;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+
+import java.util.Arrays;
+import java.util.Collection;
+
 import mockit.Mock;
 import mockit.MockUp;
 
@@ -10,10 +15,6 @@ import org.junit.Test;
 import simple.ResourceDTO;
 import simple.exceptions.NotFoundException;
 import simple.shared.LogHolder;
-import simple.users.User;
-import simple.users.UserDTO;
-import simple.users.UserEndpoint;
-import simple.users.UserError;
 
 public class UserEndpointTest {
 
@@ -29,16 +30,37 @@ public class UserEndpointTest {
 			}
 		};
 
-		ResourceDTO resourceDTO = userEndpoint.getUser(userId);
+		ResourceDTO<UserDTO> resourceDTO = userEndpoint.getUser(userId);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
 
-		assertThat(resourceDTO.getItem(), is(UserDTO.getInstanceFrom(User.getNewInstance().withId(userId))));
+		assertThat(resourceDTO.getItem(), is(UserDTO.getNewInstanceFromEntity(User.getNewInstance().withId(userId))));
+	}
+	
+	@Test
+	public void shouldGetUsers() throws NotFoundException {
+		Long userId = 1L;
+		Integer page = 1;
+		UserEndpoint userEndpoint = new UserEndpoint();
+
+		new MockUp<User>() {
+			@Mock
+			public Collection<User> findAll(Integer page) {
+				return Arrays.asList(User.getNewInstance().withId(userId));
+			}
+		};
+
+		ResourceDTO<Collection<UserDTO>> resourceDTO = userEndpoint.getUsers(page);
+
+		LogHolder.getLogger().info("{}\n\t{}", new Object() {
+		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
+
+		assertThat(resourceDTO.getItems(), contains(UserDTO.getNewInstanceFromEntity(User.getNewInstance().withId(userId))));
 	}
 
 	@Test(expected = NotFoundException.class)
-	public void shouldThrowsNotFoundException() throws NotFoundException {
+	public void shouldThrowsNotFoundExceptionOnGetUser() throws NotFoundException {
 		Long userId = 1L;
 		UserEndpoint userEndpoint = new UserEndpoint();
 

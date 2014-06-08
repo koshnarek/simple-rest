@@ -9,8 +9,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import simple.JacksonObjectMapperProvider;
@@ -22,7 +24,21 @@ import simple.shared.LogHolder;
 public class UserEndpointIntegrationTest {
 
 	final public static String TARGET = "http://localhost:8080";
-	final private static String URI = "/rs/users/1";
+	final private static String URI = "/rs/users";
+	final private static String USER_ID = "/1";
+
+	@BeforeClass
+	public static void createUser() {
+		UserDTO userDTO = new UserDTO()
+			.withLogin("teste@teste.com")
+			.withStatus('A');
+		ClientBuilder.newClient()
+				.register(JacksonObjectMapperProvider.class)
+				.target(TARGET)
+				.path(URI)
+				.request(MediaType.APPLICATION_RESOURCE_JSON)
+				.post(Entity.entity(userDTO, MediaType.APPLICATION_RESOURCE_JSON));
+	}
 
 	@Test
 	public void shouldGetUserWithoutVersionWithAllFields() {
@@ -30,7 +46,7 @@ public class UserEndpointIntegrationTest {
 		Response response = ClientBuilder.newClient()
 				.register(JacksonObjectMapperProvider.class)
 				.target(TARGET)
-				.path(URI)
+				.path(URI + USER_ID)
 				.request(MediaType.APPLICATION_RESOURCE_JSON)
 				.get();
 
@@ -53,7 +69,7 @@ public class UserEndpointIntegrationTest {
 		Response response = ClientBuilder.newClient()
 				.register(JacksonObjectMapperProvider.class)
 				.target(TARGET)
-				.path(URI)
+				.path(URI + USER_ID)
 				.request(MediaType.APPLICATION_RESOURCE_JSON)
 				.header(VersionFilter.NAME, 1)
 				.get();
@@ -77,7 +93,7 @@ public class UserEndpointIntegrationTest {
 		Response response = ClientBuilder.newClient()
 				.register(JacksonObjectMapperProvider.class)
 				.target(TARGET)
-				.path(URI)
+				.path(URI + USER_ID)
 				.request(MediaType.APPLICATION_RESOURCE_JSON)
 				.header(VersionFilter.NAME, 2)
 				.get();
@@ -94,14 +110,14 @@ public class UserEndpointIntegrationTest {
 		assertThat(((Map<?, ?>) resource.getItem()).get("login"), is(notNullValue()));
 		assertThat(((Map<?, ?>) resource.getItem()).get("status"), is(notNullValue()));
 	}
-	
+
 	@Test
 	public void shouldGetUserWithVersion3AndWithoutStatus() {
 
 		Response response = ClientBuilder.newClient()
 				.register(JacksonObjectMapperProvider.class)
 				.target(TARGET)
-				.path(URI)
+				.path(URI + USER_ID)
 				.request(MediaType.APPLICATION_RESOURCE_JSON)
 				.header(VersionFilter.NAME, 3)
 				.get();

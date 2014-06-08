@@ -1,5 +1,8 @@
 package simple.users;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.apache.commons.lang3.StringUtils;
 
 import simple.AbstractDTO;
@@ -44,10 +47,35 @@ public class UserDTO extends AbstractDTO<User> {
 		this.status = status;
 	}
 
-	public static UserDTO getInstanceFrom(User user) {
+	public UserDTO withId(Long id) {
+		this.id = id;
+		return this;
+	}
+
+	public UserDTO withLogin(String login) {
+		this.login = login;
+		return this;
+	}
+
+	public UserDTO withStatus(Character status) {
+		this.status = status;
+		return this;
+	}
+
+	public static UserDTO getNewInstance() {
+		return new UserDTO();
+	}
+
+	public static Collection<UserDTO> getNewInstanceFromEntitys(Collection<User> users) {
+		Collection<UserDTO> userDTOs = new ArrayList<UserDTO>(users.size());
+		users.forEach(user -> userDTOs.add(UserDTO.getNewInstanceFromEntity(user)));
+		return userDTOs;
+	}
+
+	public static UserDTO getNewInstanceFromEntity(User user) {
 		UserDTO userDTO = new UserDTO();
 		userDTO.populateFrom(user);
-		userDTO.setStatus((user != null && user.getStatus() != null) ? user.getStatus().getCode() : null);
+		//userDTO.setStatus((user != null && user.getStatus() != null) ? user.getStatus().getCode() : null);
 		userDTO.setLink(StringUtils.replace(UserURI.USER, "{" + UserURI.USER_ID + "}", String.valueOf(user.getId())));
 		return userDTO;
 	}

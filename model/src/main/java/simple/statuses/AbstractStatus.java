@@ -2,9 +2,9 @@ package simple.statuses;
 
 import simple.AbstractDomain;
 
-public abstract class AbstractStatus<T> extends AbstractDomain {
+public abstract class AbstractStatus<T, K> extends AbstractDomain<K> {
 
-	protected T type;
+	transient protected T type;
 
 	abstract public Character getCode();
 

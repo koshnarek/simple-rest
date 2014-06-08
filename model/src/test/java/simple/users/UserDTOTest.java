@@ -4,18 +4,19 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.junit.Test;
 
 import simple.exceptions.DTOConstructionException;
 import simple.shared.LogHolder;
-import simple.users.User;
-import simple.users.UserDTO;
 
-public class UserBuilderTest {
+public class UserDTOTest {
 
-	long id = 1L;
+	Long id = 1L;
 	String login = "teste@teste.com";
-	char status = 'A';
+	Character status = 'A';
 
 	@Test
 	public void shouldBuildUserDTOFromUserWithAllFields() {
@@ -24,7 +25,7 @@ public class UserBuilderTest {
 				.withLogin(login)
 				.withStatus(status);
 
-		UserDTO userDTO = UserDTO.getInstanceFrom(user);
+		UserDTO userDTO = UserDTO.getNewInstanceFromEntity(user);
 
 		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
@@ -41,7 +42,7 @@ public class UserBuilderTest {
 				.withLogin(login)
 				.withStatus(null);
 
-		UserDTO userDTO = UserDTO.getInstanceFrom(user);
+		UserDTO userDTO = UserDTO.getNewInstanceFromEntity(user);
 
 		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
@@ -58,7 +59,7 @@ public class UserBuilderTest {
 				.withLogin(null)
 				.withStatus(status);
 
-		UserDTO userDTO = UserDTO.getInstanceFrom(user);
+		UserDTO userDTO = UserDTO.getNewInstanceFromEntity(user);
 
 		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
@@ -75,7 +76,7 @@ public class UserBuilderTest {
 				.withLogin(login)
 				.withStatus(status);
 
-		UserDTO userDTO = UserDTO.getInstanceFrom(user);
+		UserDTO userDTO = UserDTO.getNewInstanceFromEntity(user);
 
 		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), user.toString(), userDTO.toString());
@@ -88,14 +89,36 @@ public class UserBuilderTest {
 	@Test
 	public void shouldBuildUserDTOFromUserWithoutAllFields() {
 		User user = new User();
-		UserDTO userDTO = UserDTO.getInstanceFrom(user);
+		UserDTO userDTO = UserDTO.getNewInstanceFromEntity(user);
 
 		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), user, userDTO.toString());
+		
+		assertThat(userDTO.getId(), is(nullValue()));
+		assertThat(userDTO.getLogin(), is(nullValue()));
+		assertThat(userDTO.getStatus(), is(nullValue()));
 	}
 
+	@Test
+	public void shouldBuildCollectionOfUserDTOFromCollectionOfUserWithAllFields() {
+		Collection<User> users = new ArrayList<User>();
+		users.add(User.getNewInstance()
+				.withId(id)
+				.withLogin(login)
+				.withStatus(status));
+		Collection<UserDTO> userDTOs = UserDTO.getNewInstanceFromEntitys(users);
+		
+		LogHolder.getLogger().info("{}\n\t{}\n\t{}", new Object() {
+		}.getClass().getEnclosingMethod().getName(), users, userDTOs);
+		
+		UserDTO userDTO = userDTOs.stream().findFirst().get();
+		assertThat(userDTO.getId(), is(id));
+		assertThat(userDTO.getLogin(), is(login));
+		assertThat(userDTO.getStatus(), is(status));
+	}
+	
 	@Test(expected = DTOConstructionException.class)
 	public void shouldThrowExceptionFromNullUser() {
-		UserDTO.getInstanceFrom(null);
+		UserDTO.getNewInstanceFromEntity(null);
 	}
 }
