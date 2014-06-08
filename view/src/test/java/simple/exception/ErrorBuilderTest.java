@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import simple.ErrorDTO;
+import simple.base.ErrorDTO;
 import simple.exceptions.InternalException;
 import simple.exceptions.NotFoundException;
 import simple.shared.LogHolder;

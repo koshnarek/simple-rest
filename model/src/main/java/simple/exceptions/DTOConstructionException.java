@@ -1,6 +1,6 @@
 package simple.exceptions;
 
-import simple.AbstractDTO;
+import simple.base.AbstractDTO;
 
 public class DTOConstructionException extends InternalException {
 	

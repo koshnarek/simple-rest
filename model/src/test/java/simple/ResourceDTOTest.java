@@ -14,6 +14,9 @@ import java.util.Collection;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
+import simple.base.ErrorDTO;
+import simple.base.LinkDTO;
+import simple.base.ResourceDTO;
 import simple.shared.LogHolder;
 import simple.users.UserDTO;
 import simple.users.UserURI;

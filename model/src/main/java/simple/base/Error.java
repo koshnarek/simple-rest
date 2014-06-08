@@ -1,4 +1,4 @@
-package simple;
+package simple.base;
 
 public interface Error<T> {
 

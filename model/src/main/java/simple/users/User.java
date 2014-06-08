@@ -13,15 +13,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import simple.AbstractDomain;
+import simple.Deletable;
 import simple.Salvable;
+import simple.base.AbstractDomain;
 import simple.exceptions.AlreadyExistsException;
 import simple.exceptions.EmptyCollectionException;
 import simple.exceptions.NotFoundException;
 
 @Entity
 @Table(name = "user")
-public class User extends AbstractDomain<UserDTO> implements Salvable<User> {
+public class User extends AbstractDomain<UserDTO> implements Salvable<User>, Deletable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -65,23 +66,7 @@ public class User extends AbstractDomain<UserDTO> implements Salvable<User> {
 	public void setStatus(Character code) {
 		this.status = new Status(code);
 	}
-
-	public static User getNewInstance() {
-		return new User();
-	}
-
-	public static User find(@NotNull Long id) throws NotFoundException {
-		return UserService.getInstance().find(id);
-	}
-
-	public static Collection<User> findAll(Integer page) throws EmptyCollectionException {
-		return UserService.getInstance().findAll(page);
-	}
-
-	public User save() throws AlreadyExistsException {
-		return UserService.getInstance().create(this);
-	}
-
+	
 	public User withId(Long id) {
 		this.setId(id);
 		return this;
@@ -103,10 +88,31 @@ public class User extends AbstractDomain<UserDTO> implements Salvable<User> {
 		return user;
 	}
 
+	public static User getNewInstance() {
+		return new User();
+	}
+
+	public static User find(@NotNull Long id) throws NotFoundException {
+		return UserService.getInstance().find(id);
+	}
+
+	public static Collection<User> findAll(Integer page) throws EmptyCollectionException {
+		return UserService.getInstance().findAll(page);
+	}
+
+	@Override
+	public User save() throws AlreadyExistsException {
+		return UserService.getInstance().create(this);
+	}
+
+	@Override
+	public void delete() throws NotFoundException {
+		UserService.getInstance().delate(this);
+	}
+
 	public static Collection<User> getNewInstanceFromDTOs(Collection<UserDTO> userDTOs) {
 		Collection<User> users = new ArrayList<User>(userDTOs.size());
 		userDTOs.forEach(userDTO -> users.add(User.getNewInstanceFromDTO(userDTO)));
 		return users;
 	}
-
 }

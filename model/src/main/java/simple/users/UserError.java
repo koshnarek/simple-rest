@@ -1,6 +1,6 @@
 package simple.users;
 
-import simple.Error;
+import simple.base.Error;
 
 public enum UserError implements Error<Long> {
 

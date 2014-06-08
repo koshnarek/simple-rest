@@ -1,6 +1,6 @@
 package simple.exceptions;
 
-import simple.Error;
+import simple.base.Error;
 
 public class AbstractException extends Exception {
 

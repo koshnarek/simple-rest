@@ -2,6 +2,7 @@ package simple.users;
 
 import java.util.Collection;
 
+import javax.inject.Named;
 import javax.persistence.EntityExistsException;
 import javax.validation.constraints.NotNull;
 
@@ -15,6 +16,7 @@ import simple.exceptions.NotFoundException;
 import simple.users.repository.StatusRepository;
 import simple.users.repository.UserRepository;
 
+@Named
 public class UserService {
 
 	private static UserService instance;
@@ -40,7 +42,7 @@ public class UserService {
 	}
 
 	public Collection<User> findAll(Integer page) throws EmptyCollectionException {
-		Collection<User> users = userRepository.findAll(new PageRequest(page, Page.SIZE)).getContent();
+		Collection<User> users = userRepository.findAll(new PageRequest(--page, Page.SIZE)).getContent();
 		if (users == null || users.isEmpty()) {
 			throw new EmptyCollectionException(UserError.EMPTY_COLLECTION);
 		} else {
@@ -58,6 +60,14 @@ public class UserService {
 			}
 		}
 		return user;
+	}
+
+	public void delate(@NotNull User user) throws NotFoundException {
+		if (user == null || user.getId() == null) {
+			throw new NotFoundException(UserError.NOT_FOUND.withId(null));
+		} else {
+			userRepository.delete(user);
+		}
 	}
 
 }

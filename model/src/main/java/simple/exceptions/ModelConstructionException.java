@@ -1,6 +1,6 @@
 package simple.exceptions;
 
-import simple.AbstractDomain;
+import simple.base.AbstractDomain;
 
 public class ModelConstructionException extends InternalException {
 	

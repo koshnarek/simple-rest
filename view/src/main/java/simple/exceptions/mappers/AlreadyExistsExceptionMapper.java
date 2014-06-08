@@ -5,9 +5,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import simple.ErrorDTO;
 import simple.MediaType;
-import simple.ResourceDTO;
+import simple.base.ErrorDTO;
+import simple.base.ResourceDTO;
 import simple.exceptions.AlreadyExistsException;
 
 @Provider

@@ -1,4 +1,4 @@
-package simple;
+package simple.base;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

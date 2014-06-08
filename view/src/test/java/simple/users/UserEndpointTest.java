@@ -12,7 +12,7 @@ import mockit.MockUp;
 
 import org.junit.Test;
 
-import simple.ResourceDTO;
+import simple.base.ResourceDTO;
 import simple.exceptions.BadParameterException;
 import simple.exceptions.EmptyCollectionException;
 import simple.exceptions.NotFoundException;
