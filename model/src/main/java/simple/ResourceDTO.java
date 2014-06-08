@@ -27,13 +27,18 @@ public class ResourceDTO<T> {
 		}
 	}
 
-	public ResourceDTO(T obj, Integer page, boolean hasNext, boolean hasPrevious) {
+	public ResourceDTO(T obj, Integer page) {
 		this(obj);
-		String href = ((AbstractDTO<?>)items.stream().findFirst().get()).getLink().getHref().replace(LinkDTO.BASE_URI, "");
-		if (hasNext)
-			this.addLink(LinkDTO.NEXT, String.format(LinkDTO.PAGEABLE_QUERY, href, page + 1, items.size()));
-		if (hasPrevious)
-			this.addLink(LinkDTO.PREVIOUS, String.format(LinkDTO.PAGEABLE_QUERY, href, page - 1, items.size()));
+		if (!items.isEmpty()) {
+			page++;
+			String href = "/"
+					+ ((AbstractDTO<?>) items.stream().findFirst().get()).getLink().getHref().replace(LinkDTO.BASE_URI, "")
+							.replaceAll("[/0-9]*", "");
+			this.addLink(LinkDTO.NEXT, String.format(LinkDTO.PAGEABLE_QUERY, href, page + 1));
+			if (page - 1 > 0) {
+				this.addLink(LinkDTO.PREVIOUS, String.format(LinkDTO.PAGEABLE_QUERY, href, page - 1));
+			}
+		}
 	}
 
 	public Collection<LinkDTO> getLinks() {

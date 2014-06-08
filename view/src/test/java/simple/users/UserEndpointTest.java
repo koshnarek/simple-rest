@@ -13,6 +13,7 @@ import mockit.MockUp;
 import org.junit.Test;
 
 import simple.ResourceDTO;
+import simple.exceptions.EmptyCollectionException;
 import simple.exceptions.NotFoundException;
 import simple.shared.LogHolder;
 
@@ -37,9 +38,9 @@ public class UserEndpointTest {
 
 		assertThat(resourceDTO.getItem(), is(UserDTO.getNewInstanceFromEntity(User.getNewInstance().withId(userId))));
 	}
-	
+
 	@Test
-	public void shouldGetUsers() throws NotFoundException {
+	public void shouldGetUsers() throws EmptyCollectionException {
 		Long userId = 1L;
 		Integer page = 1;
 		UserEndpoint userEndpoint = new UserEndpoint();

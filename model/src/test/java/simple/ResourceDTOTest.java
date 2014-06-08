@@ -1,6 +1,7 @@
 package simple;
 
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
@@ -66,14 +67,14 @@ public class ResourceDTOTest {
 	@Test
 	public void shouldBuildResourceDTOFromCollectionOfDTOsWithPageableLinks() {
 		String link = StringUtils.replace(UserURI.USER, "{" + UserURI.USER_ID + "}", String.valueOf(1));
-		LinkDTO previous = new LinkDTO("previous", String.format(LinkDTO.PAGEABLE_QUERY, link, 1, 3));
-		LinkDTO next = new LinkDTO("next", String.format(LinkDTO.PAGEABLE_QUERY, link, 3, 3));
+		LinkDTO previous = new LinkDTO("previous", String.format(LinkDTO.PAGEABLE_QUERY, UserURI.USERS, 1));
+		LinkDTO next = new LinkDTO("next", String.format(LinkDTO.PAGEABLE_QUERY, UserURI.USERS, 3));
 		Collection<UserDTO> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
 		userDTOs.stream().forEach(
 				userDTO -> userDTO.setLink(link));
-		Integer page = 2;
+		Integer page = 1;
 
-		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs, page, true, true);
+		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs, page);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
@@ -82,43 +83,20 @@ public class ResourceDTOTest {
 		assertThat(resourceDTO.getItems(), is(userDTOs));
 		assertThat(resourceDTO.getError(), is(nullValue()));
 		assertThat(resourceDTO.getLinks(), is(notNullValue()));
-		assertThat(resourceDTO.getLinks(), contains(next, previous));
-	}
-
-	@Test
-	public void shouldBuildResourceDTOFromCollectionOfDTOsWithPageableLinksWithoutNext() {
-		String link = StringUtils.replace(UserURI.USER, "{" + UserURI.USER_ID + "}", String.valueOf(1));
-		LinkDTO previous = new LinkDTO("previous", String.format(LinkDTO.PAGEABLE_QUERY, link, 1, 3));
-		LinkDTO next = new LinkDTO("next", String.format(LinkDTO.PAGEABLE_QUERY, link, 3, 3));
-		Collection<UserDTO> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
-		userDTOs.stream().forEach(
-				userDTO -> userDTO.setLink(link));
-		Integer page = 2;
-
-		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs, page, false, true);
-
-		LogHolder.getLogger().info("{}\n\t{}", new Object() {
-		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
-
-		assertThat(resourceDTO.getItem(), is(nullValue()));
-		assertThat(resourceDTO.getItems(), is(userDTOs));
-		assertThat(resourceDTO.getError(), is(nullValue()));
-		assertThat(resourceDTO.getLinks(), is(notNullValue()));
-		assertThat(resourceDTO.getLinks(), contains(previous));
-		assertThat(resourceDTO.getLinks(), not(contains(next)));
+		assertThat(resourceDTO.getLinks(), containsInAnyOrder(next, previous));
 	}
 
 	@Test
 	public void shouldBuildResourceDTOFromCollectionOfDTOsWithPageableLinksWithoutPrevious() {
 		String link = StringUtils.replace(UserURI.USER, "{" + UserURI.USER_ID + "}", String.valueOf(1));
-		LinkDTO previous = new LinkDTO("previous", String.format(LinkDTO.PAGEABLE_QUERY, link, 1, 3));
-		LinkDTO next = new LinkDTO("next", String.format(LinkDTO.PAGEABLE_QUERY, link, 3, 3));
+		LinkDTO previous = new LinkDTO("previous", String.format(LinkDTO.PAGEABLE_QUERY, UserURI.USERS, 0));
+		LinkDTO next = new LinkDTO("next", String.format(LinkDTO.PAGEABLE_QUERY, UserURI.USERS, 2));
 		Collection<UserDTO> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
 		userDTOs.stream().forEach(
 				userDTO -> userDTO.setLink(link));
-		Integer page = 2;
+		Integer page = 0;
 
-		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs, page, true, false);
+		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs, page);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
@@ -127,26 +105,7 @@ public class ResourceDTOTest {
 		assertThat(resourceDTO.getItems(), is(userDTOs));
 		assertThat(resourceDTO.getError(), is(nullValue()));
 		assertThat(resourceDTO.getLinks(), is(notNullValue()));
-		assertThat(resourceDTO.getLinks(), contains(next));
-		assertThat(resourceDTO.getLinks(), not(contains(previous)));
-	}
-
-	@Test
-	public void shouldBuildResourceDTOFromCollectionOfDTOsWithPageableLinksWithoutLinks() {
-		String link = StringUtils.replace(UserURI.USER, "{" + UserURI.USER_ID + "}", String.valueOf(1));
-		Collection<UserDTO> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
-		userDTOs.stream().forEach(
-				userDTO -> userDTO.setLink(link));
-		Integer page = 2;
-
-		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs, page, false, false);
-
-		LogHolder.getLogger().info("{}\n\t{}", new Object() {
-		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
-
-		assertThat(resourceDTO.getItem(), is(nullValue()));
-		assertThat(resourceDTO.getItems(), is(userDTOs));
-		assertThat(resourceDTO.getError(), is(nullValue()));
-		assertThat(resourceDTO.getLinks(), is(nullValue()));
+		assertThat(resourceDTO.getLinks(), hasItem(next));
+		assertThat(resourceDTO.getLinks(), not(hasItem(previous)));
 	}
 }

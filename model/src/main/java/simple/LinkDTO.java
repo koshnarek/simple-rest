@@ -11,7 +11,7 @@ public class LinkDTO {
 	public static String SELF = "self";
 	public static String PREVIOUS = "previous";
 	public static String NEXT = "next";
-	public static String PAGEABLE_QUERY = "%s?page=%d&size=%d";
+	public static String PAGEABLE_QUERY = "%s?page=%d";
 
 	public LinkDTO(String rel, String href) {
 		this.setRel(rel);

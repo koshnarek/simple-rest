@@ -27,6 +27,7 @@ subprojects {
 project('infrastructure') {
     dependencies {
 		compile "org.glassfish.jersey.media:jersey-media-json-jackson:2.9"
+        compile "com.google.inject:guice:3.0"
 	}
 }
 project(':model') {
@@ -38,7 +39,6 @@ project(':model') {
         compile "org.hibernate:hibernate-entitymanager:4.3.5.Final"
         compile "com.jolbox:bonecp:0.8.0.RELEASE"
         compile "com.h2database:h2:1.4.178"
-        compile "com.google.inject:guice:3.0"
         compile "com.google.code.guice-repository:guice-repository:2.1.0"
         compile "com.sun.jersey.contribs:jersey-guice:1.18.1"
 		compile "commons-beanutils:commons-beanutils:1.9.2"

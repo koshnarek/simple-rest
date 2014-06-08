@@ -5,7 +5,9 @@ import simple.Error;
 public enum UserError implements Error<Long> {
 
 	NOT_FOUND(1, "user %s not found"),
-	ALREADY_EXISTS(2, "user %s already exists");
+	ALREADY_EXISTS(2, "user %s already exists"),
+	EMPTY_COLLECTION(3, "empty users on page"),
+	PAGE_PARAMETER_NULL(4, "page parameter not informed");
 
 	private Integer code;
 

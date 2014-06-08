@@ -17,7 +17,7 @@ import org.junit.Test;
 
 import simple.JacksonObjectMapperProvider;
 import simple.MediaType;
-import simple.ResourceIntegrationTest;
+import simple.ResourceIntegrationDTO;
 import simple.filter.VersionFilter;
 import simple.shared.LogHolder;
 
@@ -53,7 +53,7 @@ public class UserEndpointIntegrationTest {
 		assertThat(response.getStatus(), is(HttpServletResponse.SC_OK));
 		assertThat(response.getHeaderString("Content-Type"), is(MediaType.APPLICATION_RESOURCE_JSON));
 
-		ResourceIntegrationTest<?> resource = response.readEntity(ResourceIntegrationTest.class);
+		ResourceIntegrationDTO<?> resource = response.readEntity(ResourceIntegrationDTO.class);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resource.toString());
@@ -77,7 +77,7 @@ public class UserEndpointIntegrationTest {
 		assertThat(response.getStatus(), is(HttpServletResponse.SC_OK));
 		assertThat(response.getHeaderString("Content-Type"), is(MediaType.APPLICATION_RESOURCE_JSON));
 
-		ResourceIntegrationTest<?> resource = response.readEntity(ResourceIntegrationTest.class);
+		ResourceIntegrationDTO<?> resource = response.readEntity(ResourceIntegrationDTO.class);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resource.toString());
@@ -101,7 +101,7 @@ public class UserEndpointIntegrationTest {
 		assertThat(response.getStatus(), is(HttpServletResponse.SC_OK));
 		assertThat(response.getHeaderString("Content-Type"), is(MediaType.APPLICATION_RESOURCE_JSON));
 
-		ResourceIntegrationTest<?> resource = response.readEntity(ResourceIntegrationTest.class);
+		ResourceIntegrationDTO<?> resource = response.readEntity(ResourceIntegrationDTO.class);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resource.toString());
@@ -125,7 +125,7 @@ public class UserEndpointIntegrationTest {
 		assertThat(response.getStatus(), is(HttpServletResponse.SC_OK));
 		assertThat(response.getHeaderString("Content-Type"), is(MediaType.APPLICATION_RESOURCE_JSON));
 
-		ResourceIntegrationTest<?> resource = response.readEntity(ResourceIntegrationTest.class);
+		ResourceIntegrationDTO<?> resource = response.readEntity(ResourceIntegrationDTO.class);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resource.toString());

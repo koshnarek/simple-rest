@@ -14,6 +14,7 @@ import simple.MediaType;
 import simple.Page;
 import simple.ResourceDTO;
 import simple.exceptions.AlreadyExistsException;
+import simple.exceptions.EmptyCollectionException;
 import simple.exceptions.NotFoundException;
 
 @Path("/")
@@ -31,10 +32,11 @@ public class UserEndpoint {
 	@GET
 	@Path(UserURI.USERS)
 	@Produces({ MediaType.APPLICATION_RESOURCE_JSON, MediaType.APPLICATION_JSON })
-	public ResourceDTO<Collection<UserDTO>> getUsers(@QueryParam(Page.PARAM) Integer page) {
+	public ResourceDTO<Collection<UserDTO>> getUsers(@QueryParam(Page.PARAM) Integer page) throws EmptyCollectionException {
+		page--;
 		Collection<User> users = User.findAll(page);
 		Collection<UserDTO> userDTOs = UserDTO.getNewInstanceFromEntitys(users);
-		return new ResourceDTO<Collection<UserDTO>>(userDTOs, page, true, true);
+		return new ResourceDTO<Collection<UserDTO>>(userDTOs, page);
 	}
 
 	@POST

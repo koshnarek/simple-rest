@@ -3,7 +3,6 @@ package simple.users;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import simple.AbstractDomain;
 import simple.Salvable;
 import simple.exceptions.AlreadyExistsException;
+import simple.exceptions.EmptyCollectionException;
 import simple.exceptions.NotFoundException;
 
 @Entity
@@ -31,7 +31,7 @@ public class User extends AbstractDomain<UserDTO> implements Salvable<User> {
 	@Column(name = "nam_login")
 	private String login;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(name = "cod_user_status")
 	private Status status;
 
@@ -49,6 +49,10 @@ public class User extends AbstractDomain<UserDTO> implements Salvable<User> {
 
 	public void setLogin(String login) {
 		this.login = login;
+	}
+	
+	public Status getStatusEntity() {
+		return this.status;
 	}
 
 	public Character getStatus() {
@@ -70,7 +74,7 @@ public class User extends AbstractDomain<UserDTO> implements Salvable<User> {
 		return UserService.getInstance().find(id);
 	}
 
-	public static Collection<User> findAll(Integer page) {
+	public static Collection<User> findAll(Integer page) throws EmptyCollectionException {
 		return UserService.getInstance().findAll(page);
 	}
 
