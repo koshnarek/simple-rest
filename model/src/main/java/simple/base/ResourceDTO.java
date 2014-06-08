@@ -34,8 +34,8 @@ public class ResourceDTO<T> {
 			String href = "/"
 					+ ((AbstractDTO<?>) items.stream().findFirst().get()).getLink().getHref().replace(LinkDTO.BASE_URI, "")
 							.replaceAll("[/0-9]*", "");
-			this.addLink(LinkDTO.NEXT, String.format(LinkDTO.PAGEABLE_QUERY, href, page + 1));
-			if (page - 1 > 0) {
+			this.addLink(LinkDTO.NEXT, String.format(LinkDTO.PAGEABLE_QUERY, href, page));
+			if ((page - 2) > 0) {
 				this.addLink(LinkDTO.PREVIOUS, String.format(LinkDTO.PAGEABLE_QUERY, href, page - 1));
 			}
 		}

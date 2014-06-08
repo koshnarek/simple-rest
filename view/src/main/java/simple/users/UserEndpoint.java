@@ -2,6 +2,7 @@ package simple.users;
 
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -10,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 
 import simple.MediaType;
 import simple.Page;
@@ -58,10 +60,10 @@ public class UserEndpoint {
 	@DELETE
 	@Path(UserURI.USER)
 	@Produces({ MediaType.APPLICATION_RESOURCE_JSON, MediaType.APPLICATION_JSON })
-	public ResourceDTO<UserDTO> deleteUser(@PathParam(UserURI.USER_ID) Long userId) throws NotFoundException {
-		User user = User.find(userId);
-		UserDTO userDTO = UserDTO.getNewInstanceFromEntity(user);
-		user.delete();
-		return new ResourceDTO<UserDTO>(userDTO);
+	public Response deleteUser(@PathParam(UserURI.USER_ID) Long userId) throws NotFoundException {
+		new User()
+			.withId(userId)
+			.delete();
+		return Response.status(HttpServletResponse.SC_GONE).build();
 	}
 }

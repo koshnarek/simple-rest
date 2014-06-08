@@ -107,7 +107,7 @@ public class User extends AbstractDomain<UserDTO> implements Salvable<User>, Del
 
 	@Override
 	public void delete() throws NotFoundException {
-		UserService.getInstance().delate(this);
+		UserService.getInstance().delete(this.getId());
 	}
 
 	public static Collection<User> getNewInstanceFromDTOs(Collection<UserDTO> userDTOs) {

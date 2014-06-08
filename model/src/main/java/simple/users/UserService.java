@@ -62,11 +62,11 @@ public class UserService {
 		return user;
 	}
 
-	public void delate(@NotNull User user) throws NotFoundException {
-		if (user == null || user.getId() == null) {
+	public void delete(@NotNull Long id) throws NotFoundException {
+		if (id == null) {
 			throw new NotFoundException(UserError.NOT_FOUND.withId(null));
 		} else {
-			userRepository.delete(user);
+			userRepository.delete(id);
 		}
 	}
 

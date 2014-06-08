@@ -70,12 +70,12 @@ public class ResourceDTOTest {
 	@Test
 	public void shouldBuildResourceDTOFromCollectionOfDTOsWithPageableLinks() {
 		String link = StringUtils.replace(UserURI.USER, "{" + UserURI.USER_ID + "}", String.valueOf(1));
-		LinkDTO previous = new LinkDTO("previous", String.format(LinkDTO.PAGEABLE_QUERY, UserURI.USERS, 1));
+		LinkDTO previous = new LinkDTO("previous", String.format(LinkDTO.PAGEABLE_QUERY, UserURI.USERS, 2));
 		LinkDTO next = new LinkDTO("next", String.format(LinkDTO.PAGEABLE_QUERY, UserURI.USERS, 3));
 		Collection<UserDTO> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
 		userDTOs.stream().forEach(
 				userDTO -> userDTO.setLink(link));
-		Integer page = 1;
+		Integer page = 2;
 
 		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs, page);
 
@@ -97,7 +97,7 @@ public class ResourceDTOTest {
 		Collection<UserDTO> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
 		userDTOs.stream().forEach(
 				userDTO -> userDTO.setLink(link));
-		Integer page = 0;
+		Integer page = 1;
 
 		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs, page);
 
