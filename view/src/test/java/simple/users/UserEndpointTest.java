@@ -5,14 +5,14 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
-import java.util.Collection;
 
 import mockit.Mock;
 import mockit.MockUp;
 
 import org.junit.Test;
 
-import simple.base.ResourceDTO;
+import simple.base.Page;
+import simple.base.PageDTO;
 import simple.exceptions.BadParameterException;
 import simple.exceptions.EmptyCollectionException;
 import simple.exceptions.NotFoundException;
@@ -32,33 +32,33 @@ public class UserEndpointTest {
 			}
 		};
 
-		ResourceDTO<UserDTO> resourceDTO = userEndpoint.getUser(userId);
+		UserDTO userDTO = userEndpoint.getUser(userId);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
-		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
+		}.getClass().getEnclosingMethod().getName(), userDTO);
 
-		assertThat(resourceDTO.getItem(), is(UserDTO.getNewInstanceFromEntity(User.getNewInstance().withId(userId))));
+		assertThat(userDTO, is(UserDTO.getNewInstanceFromEntity(User.getNewInstance().withId(userId))));
 	}
 
 	@Test
 	public void shouldGetUsers() throws EmptyCollectionException, BadParameterException {
 		Long userId = 1L;
-		Integer page = 1;
+		Integer pageIndex = 1;
 		UserEndpoint userEndpoint = new UserEndpoint();
 
 		new MockUp<User>() {
 			@Mock
-			public Collection<User> findAll(Integer page) {
-				return Arrays.asList(User.getNewInstance().withId(userId));
+			public Page<User> findAll(Integer page) throws EmptyCollectionException {
+				return new Page<User>(Arrays.asList(User.getNewInstance().withId(userId)), pageIndex);
 			}
 		};
 
-		ResourceDTO<Collection<UserDTO>> resourceDTO = userEndpoint.getUsers(page);
+		PageDTO<UserDTO> pageDTO = userEndpoint.getUsers(pageIndex);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
-		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
+		}.getClass().getEnclosingMethod().getName(), pageDTO.toString());
 
-		assertThat(resourceDTO.getItems(), contains(UserDTO.getNewInstanceFromEntity(User.getNewInstance().withId(userId))));
+		assertThat(pageDTO.getPageCollection(), contains(UserDTO.getNewInstanceFromEntity(User.getNewInstance().withId(userId))));
 	}
 
 	@Test(expected = NotFoundException.class)
