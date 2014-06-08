@@ -7,7 +7,6 @@
 
 	<persistence-unit name="simple.persistence-unit">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<!-- <class>simple.users.User</class> <class>simple.users.Status</class> -->
 		<properties>
 			<property name="hibernate.service.jdbc.connections.spi.provider_class"
 				value="com.jolbox.bonecp.provider.BoneCPConnectionProvider" />
@@ -29,7 +28,7 @@
 			<property name="bonecp.idleMaxAge" value="240" />
 			<property name="bonecp.idleConnectionTestPeriod" value="60" />
 			<property name="bonecp.statementsCacheSize" value="20" />
-		</properties>
+		</properties>	
 	</persistence-unit>
 
 </persistence>

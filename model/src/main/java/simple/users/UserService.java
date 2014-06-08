@@ -40,15 +40,11 @@ public class UserService {
 	}
 
 	public Collection<User> findAll(Integer page) throws EmptyCollectionException {
-		if (page != null) {
-			Collection<User> users = userRepository.findAll(new PageRequest(page, Page.SIZE)).getContent();
-			if (users == null || users.isEmpty()) {
-				throw new EmptyCollectionException(UserError.EMPTY_COLLECTION);
-			} else {
-				return users;
-			}
+		Collection<User> users = userRepository.findAll(new PageRequest(page, Page.SIZE)).getContent();
+		if (users == null || users.isEmpty()) {
+			throw new EmptyCollectionException(UserError.EMPTY_COLLECTION);
 		} else {
-			throw new EmptyCollectionException(UserError.PAGE_PARAMETER_NULL);
+			return users;
 		}
 	}
 
