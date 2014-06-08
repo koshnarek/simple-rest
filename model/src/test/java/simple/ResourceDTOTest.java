@@ -16,6 +16,7 @@ import org.junit.Test;
 
 import simple.base.ErrorDTO;
 import simple.base.LinkDTO;
+import simple.base.PageDTO;
 import simple.base.ResourceDTO;
 import simple.shared.LogHolder;
 import simple.users.UserDTO;
@@ -56,7 +57,8 @@ public class ResourceDTOTest {
 	@Test
 	public void shouldBuildResourceDTOFromCollectionOfDTOs() {
 		Collection<UserDTO> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
-		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs);
+		PageDTO<UserDTO> pageDTO = new PageDTO<UserDTO>(1, 1, userDTOs);
+		ResourceDTO<PageDTO<UserDTO>> resourceDTO = new ResourceDTO<PageDTO<UserDTO>>(pageDTO, 1);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
@@ -75,9 +77,10 @@ public class ResourceDTOTest {
 		Collection<UserDTO> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
 		userDTOs.stream().forEach(
 				userDTO -> userDTO.setLink(link));
-		Integer page = 2;
+		Integer pageIndex = 2;
+		PageDTO<UserDTO> pageDTO = new PageDTO<UserDTO>(pageIndex, 3, userDTOs);
 
-		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs, page);
+		ResourceDTO<PageDTO<UserDTO>> resourceDTO = new ResourceDTO<PageDTO<UserDTO>>(pageDTO, pageIndex);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());
@@ -97,9 +100,10 @@ public class ResourceDTOTest {
 		Collection<UserDTO> userDTOs = Arrays.asList(new UserDTO(), new UserDTO(), new UserDTO());
 		userDTOs.stream().forEach(
 				userDTO -> userDTO.setLink(link));
-		Integer page = 1;
+		Integer pageIndex = 1;
+		PageDTO<UserDTO> pageDTO = new PageDTO<UserDTO>(pageIndex, 3, userDTOs);
 
-		ResourceDTO<Collection<UserDTO>> resourceDTO = new ResourceDTO<Collection<UserDTO>>(userDTOs, page);
+		ResourceDTO<PageDTO<UserDTO>> resourceDTO = new ResourceDTO<PageDTO<UserDTO>>(pageDTO, pageIndex);
 
 		LogHolder.getLogger().info("{}\n\t{}", new Object() {
 		}.getClass().getEnclosingMethod().getName(), resourceDTO.toString());

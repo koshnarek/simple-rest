@@ -13,7 +13,7 @@ public class ResourceDTO<T> {
 	private ErrorDTO error;
 
 	private Collection<T> items;
-	
+
 	private Integer totalPages;
 
 	private Collection<LinkDTO> links;
@@ -35,12 +35,13 @@ public class ResourceDTO<T> {
 		this(obj);
 		if (!items.isEmpty()) {
 			page++;
-			String href = "/"
-					+ ((AbstractDTO<?>) items.stream().findFirst().get()).getLink().getHref().replace(LinkDTO.BASE_URI, "")
-							.replaceAll("[/0-9]*", "");
-			this.addLink(LinkDTO.NEXT, String.format(LinkDTO.PAGEABLE_QUERY, href, page));
-			if ((page - 2) > 0) {
-				this.addLink(LinkDTO.PREVIOUS, String.format(LinkDTO.PAGEABLE_QUERY, href, page - 1));
+			LinkDTO linkDTO = ((AbstractDTO<?>) items.stream().findFirst().get()).getLink();
+			if (linkDTO != null) {
+				String href = "/" + linkDTO.getHref().replace(LinkDTO.BASE_URI, "").replaceAll("[/0-9]*", "");
+				this.addLink(LinkDTO.NEXT, String.format(LinkDTO.PAGEABLE_QUERY, href, page));
+				if ((page - 2) > 0) {
+					this.addLink(LinkDTO.PREVIOUS, String.format(LinkDTO.PAGEABLE_QUERY, href, page - 1));
+				}
 			}
 		}
 	}
@@ -72,7 +73,7 @@ public class ResourceDTO<T> {
 	public void setItems(Collection<T> items) {
 		this.items = items;
 	}
-	
+
 	public Integer getTotalPages() {
 		return totalPages;
 	}

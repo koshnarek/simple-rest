@@ -12,6 +12,8 @@ import simple.base.ResourceDTO;
 
 @Provider
 public class MediaTypeContainerResponseFilter implements ContainerResponseFilter {
+	
+	private static final String WADL_URI = "application.wadl";
 
 	@Override
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
@@ -21,6 +23,8 @@ public class MediaTypeContainerResponseFilter implements ContainerResponseFilter
 		} else if (responseEntity instanceof PageDTO) {
 			PageDTO<?> pageDTO = (PageDTO<?>) responseContext.getEntity();
 			responseContext.setEntity(new ResourceDTO<Object>(pageDTO, pageDTO.getPageIndex()));
+		} else if(requestContext.getUriInfo().getAbsolutePath().getPath().contains(WADL_URI)) {
+			// notting to do
 		} else {
 			responseContext.setEntity(new ResourceDTO<Object>(responseContext.getEntity()));
 		}
