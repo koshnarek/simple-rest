@@ -13,6 +13,8 @@ public class ResourceDTO<T> {
 	private ErrorDTO error;
 
 	private Collection<T> items;
+	
+	private Integer totalPages;
 
 	private Collection<LinkDTO> links;
 
@@ -20,8 +22,10 @@ public class ResourceDTO<T> {
 	public ResourceDTO(T obj) {
 		if (obj instanceof ErrorDTO) {
 			this.setError((ErrorDTO) obj);
-		} else if (obj instanceof Collection) {
-			this.setItems((Collection<T>) obj);
+		} else if (obj instanceof PageDTO) {
+			PageDTO<T> pageDTO = (PageDTO<T>) obj;
+			this.setItems(pageDTO.getPageCollection());
+			this.setTotalPages(pageDTO.getTotalPages());
 		} else {
 			this.setItem(obj);
 		}
@@ -67,6 +71,14 @@ public class ResourceDTO<T> {
 
 	public void setItems(Collection<T> items) {
 		this.items = items;
+	}
+	
+	public Integer getTotalPages() {
+		return totalPages;
+	}
+
+	public void setTotalPages(Integer totalPages) {
+		this.totalPages = totalPages;
 	}
 
 	public ResourceDTO<T> addLink(String rel, String href) {

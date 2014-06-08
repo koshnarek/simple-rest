@@ -7,16 +7,18 @@ import javax.ws.rs.ext.Provider;
 
 import simple.MediaType;
 import simple.base.ErrorDTO;
+import simple.exceptions.NottingChangeException;
 
 @Provider
-public class UnexpectedExceptionMapper implements ExceptionMapper<RuntimeException> {
+public class NottingChangeExceptionMapper implements ExceptionMapper<NottingChangeException> {
 
 	@Override
-	public Response toResponse(RuntimeException e) {
+	public Response toResponse(NottingChangeException e) {
 		return Response
-				.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
+				.status(HttpServletResponse.SC_NOT_MODIFIED)
 				.entity(ErrorDTO.fromException(e))
 				.type(MediaType.APPLICATION_RESOURCE_JSON)
 				.build();
 	}
+
 }

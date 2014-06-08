@@ -7,16 +7,18 @@ import javax.ws.rs.ext.Provider;
 
 import simple.MediaType;
 import simple.base.ErrorDTO;
+import simple.exceptions.BadParameterException;
 
 @Provider
-public class UnexpectedExceptionMapper implements ExceptionMapper<RuntimeException> {
+public class BadParameterExceptionMapper implements ExceptionMapper<BadParameterException> {
 
 	@Override
-	public Response toResponse(RuntimeException e) {
+	public Response toResponse(BadParameterException e) {
 		return Response
-				.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
+				.status(HttpServletResponse.SC_BAD_REQUEST)
 				.entity(ErrorDTO.fromException(e))
 				.type(MediaType.APPLICATION_RESOURCE_JSON)
 				.build();
 	}
+
 }

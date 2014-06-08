@@ -15,14 +15,17 @@ import javax.validation.constraints.NotNull;
 
 import simple.Deletable;
 import simple.Salvable;
+import simple.Updatable;
 import simple.base.AbstractDomain;
+import simple.base.Page;
 import simple.exceptions.AlreadyExistsException;
 import simple.exceptions.EmptyCollectionException;
 import simple.exceptions.NotFoundException;
+import simple.exceptions.NottingChangeException;
 
 @Entity
 @Table(name = "user")
-public class User extends AbstractDomain<UserDTO> implements Salvable<User>, Deletable {
+public class User extends AbstractDomain<UserDTO> implements Salvable<User>, Updatable<User>, Deletable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -96,7 +99,7 @@ public class User extends AbstractDomain<UserDTO> implements Salvable<User>, Del
 		return UserService.getInstance().find(id);
 	}
 
-	public static Collection<User> findAll(Integer page) throws EmptyCollectionException {
+	public static Page<User> findAll(Integer page) throws EmptyCollectionException {
 		return UserService.getInstance().findAll(page);
 	}
 
@@ -105,6 +108,11 @@ public class User extends AbstractDomain<UserDTO> implements Salvable<User>, Del
 		return UserService.getInstance().create(this);
 	}
 
+	@Override
+	public User update() throws NotFoundException, NottingChangeException {
+		return UserService.getInstance().update(this);
+	}
+	
 	@Override
 	public void delete() throws NotFoundException {
 		UserService.getInstance().delete(this.getId());

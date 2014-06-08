@@ -7,16 +7,18 @@ import javax.ws.rs.ext.Provider;
 
 import simple.MediaType;
 import simple.base.ErrorDTO;
+import simple.exceptions.EmptyCollectionException;
 
 @Provider
-public class UnexpectedExceptionMapper implements ExceptionMapper<RuntimeException> {
+public class EmptyCollectionExceptionMapper implements ExceptionMapper<EmptyCollectionException> {
 
 	@Override
-	public Response toResponse(RuntimeException e) {
+	public Response toResponse(EmptyCollectionException e) {
 		return Response
-				.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
+				.status(HttpServletResponse.SC_NO_CONTENT)
 				.entity(ErrorDTO.fromException(e))
 				.type(MediaType.APPLICATION_RESOURCE_JSON)
 				.build();
 	}
+
 }

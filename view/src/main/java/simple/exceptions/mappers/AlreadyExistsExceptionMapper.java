@@ -7,7 +7,6 @@ import javax.ws.rs.ext.Provider;
 
 import simple.MediaType;
 import simple.base.ErrorDTO;
-import simple.base.ResourceDTO;
 import simple.exceptions.AlreadyExistsException;
 
 @Provider
@@ -17,7 +16,7 @@ public class AlreadyExistsExceptionMapper implements ExceptionMapper<AlreadyExis
 	public Response toResponse(AlreadyExistsException e) {
 		return Response
 				.status(HttpServletResponse.SC_CONFLICT)
-				.entity(new ResourceDTO<ErrorDTO>(ErrorDTO.fromException(e)))
+				.entity(ErrorDTO.fromException(e))
 				.type(MediaType.APPLICATION_RESOURCE_JSON)
 				.build();
 	}

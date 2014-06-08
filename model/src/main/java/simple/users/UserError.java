@@ -6,8 +6,9 @@ public enum UserError implements Error<Long> {
 
 	NOT_FOUND(1, "user %s not found"),
 	ALREADY_EXISTS(2, "user %s already exists"),
-	EMPTY_COLLECTION(3, "empty users on page"),
-	PAGE_PARAMETER_NULL(4, "page parameter not informed");
+	NOTTING_CHANGE(3, "user %s has not been modified"),
+	EMPTY_COLLECTION(4, "empty users on page"),
+	PAGE_PARAMETER_NULL(5, "page parameter not informed");
 
 	private Integer code;
 
