@@ -13,11 +13,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import simple.Deletable;
-import simple.Salvable;
-import simple.Updatable;
 import simple.base.AbstractDomain;
+import simple.base.Deletable;
 import simple.base.Page;
+import simple.base.Salvable;
+import simple.base.Updatable;
 import simple.exceptions.AlreadyExistsException;
 import simple.exceptions.EmptyCollectionException;
 import simple.exceptions.NotFoundException;

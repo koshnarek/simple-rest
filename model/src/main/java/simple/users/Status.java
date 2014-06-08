@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import simple.statuses.AbstractStatus;
+import simple.base.AbstractStatus;
 import simple.users.Status.Type;
 
 @Entity

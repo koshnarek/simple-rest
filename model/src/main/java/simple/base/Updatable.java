@@ -1,4 +1,4 @@
-package simple;
+package simple.base;
 
 import simple.exceptions.NotFoundException;
 import simple.exceptions.NottingChangeException;

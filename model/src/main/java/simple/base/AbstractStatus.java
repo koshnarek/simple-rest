@@ -1,6 +1,5 @@
-package simple.statuses;
+package simple.base;
 
-import simple.base.AbstractDomain;
 
 public abstract class AbstractStatus<T, K> extends AbstractDomain<K> {
 
