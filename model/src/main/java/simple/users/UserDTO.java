@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jsondoc.core.annotation.ApiObject;
+import org.jsondoc.core.annotation.ApiObjectField;
 
 import simple.annotations.Domain;
 import simple.annotations.JsonVersion;
@@ -15,11 +17,15 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 
 @Domain(name = "User")
 @JsonFilter(value = VersionFilter.NAME)
+@ApiObject(name = "user")
 public class UserDTO extends AbstractDTO<User> {
 
+	@ApiObjectField(description = "An User identification")
 	private Long id;
+	@ApiObjectField(description = "An User login")
 	@JsonVersion(action = Action.INCLUDE, version = 2)
 	private String login;
+	@ApiObjectField(description = "An User status")
 	@JsonVersion(action = Action.EXCLUDE, version = 3)
 	private Character status;
 
