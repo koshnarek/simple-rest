@@ -1,8 +1,11 @@
-/build
-*/build
-*/bin
+build/
+*/build/
+*/bin/
 *.class
 .gradle
 .settings
-
-
+.classpath
+.project
+*/.settings
+*/.classpath
+*/.project

@@ -12,14 +12,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
-import org.jsondoc.core.annotation.Api;
-import org.jsondoc.core.annotation.ApiError;
-import org.jsondoc.core.annotation.ApiErrors;
-import org.jsondoc.core.annotation.ApiHeader;
-import org.jsondoc.core.annotation.ApiHeaders;
-import org.jsondoc.core.annotation.ApiMethod;
-import org.jsondoc.core.annotation.ApiResponseObject;
-import org.jsondoc.core.pojo.ApiVerb;
+//import org.jsondoc.core.annotation.Api;
+//import org.jsondoc.core.annotation.ApiError;
+//import org.jsondoc.core.annotation.ApiErrors;
+//import org.jsondoc.core.annotation.ApiHeader;
+//import org.jsondoc.core.annotation.ApiHeaders;
+//import org.jsondoc.core.annotation.ApiMethod;
+//import org.jsondoc.core.annotation.ApiResponseObject;
+//import org.jsondoc.core.pojo.ApiVerb;
 
 import simple.MediaType;
 import simple.base.Page;
@@ -32,20 +32,21 @@ import simple.exceptions.NottingChangeException;
 import simple.filter.VersionFilter;
 
 @Path("/")
-@Api(name = "User Services", description = "Methods for managing users")
+//@Api(name = "User Services", description = "Methods for managing users")
 public class UserEndpoint {
 
-	@ApiMethod(path = UserURI.USER_ID, verb = ApiVerb.GET, produces = { MediaType.APPLICATION_RESOURCE_JSON }, consumes = { MediaType.APPLICATION_RESOURCE_JSON }, description = "Gets an user")
-	@ApiHeaders(headers = {
-			@ApiHeader(name = VersionFilter.NAME, description = "The version of the return")
-	})
-	@ApiErrors(apierrors = {
-			@ApiError(code = "1", description = "User not found")
-	})
+//	@ApiMethod(path = UserURI.USER_ID, verb = ApiVerb.GET, produces = { MediaType.APPLICATION_RESOURCE_JSON }, consumes = { MediaType.APPLICATION_RESOURCE_JSON }, description = "Gets an user")
+//	@ApiHeaders(headers = {
+//			@ApiHeader(name = VersionFilter.NAME, description = "The version of the return")
+//	})
+//	@ApiErrors(apierrors = {
+//			@ApiError(code = "1", description = "User not found")
+//	})
 	@GET
 	@Path(UserURI.USER)
 	@Produces({ MediaType.APPLICATION_RESOURCE_JSON, MediaType.APPLICATION_JSON })
-	public @ApiResponseObject UserDTO getUser(@PathParam(UserURI.USER_ID) Long userId) throws NotFoundException {
+	//public @ApiResponseObject UserDTO getUser(@PathParam(UserURI.USER_ID) Long userId) throws NotFoundException {
+	public UserDTO getUser(@PathParam(UserURI.USER_ID) Long userId) throws NotFoundException {
 		User user = User.find(userId);
 		UserDTO userDTO = UserDTO.getNewInstanceFromEntity(user);
 		return userDTO;

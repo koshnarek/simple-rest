@@ -18,7 +18,13 @@
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="create" />
-
+			<!-- 
+			<property name="hibernate.cache.use_second_level_cache" value="true" />
+			<property name="hibernate.cache.use_query_cache" value="true" />
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.infinispan.InfinispanRegionFactory"/>
+			<property name="hibernate.cache.infinispan.statistics" value="false"/>
+			<property name="hibernate.transaction.factory_class" value="org.hibernate.transaction.JTATransactionFactory"/>
+ 			 -->
 			<property name="bonecp.partitionCount" value="3" />
 			<property name="bonecp.maxConnectionsPerPartition" value="20" />
 			<property name="bonecp.minConnectionsPerPartition" value="10" />
