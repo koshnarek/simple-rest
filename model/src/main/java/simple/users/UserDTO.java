@@ -2,10 +2,12 @@ package simple.users;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 //import org.jsondoc.core.annotation.ApiObject;
 //import org.jsondoc.core.annotation.ApiObjectField;
+
 
 import simple.annotations.Domain;
 import simple.annotations.JsonVersion;
@@ -28,6 +30,8 @@ public class UserDTO extends AbstractDTO<User> {
 	//@ApiObjectField(description = "An User status")
 	@JsonVersion(action = Action.EXCLUDE, version = 3)
 	private Character status;
+	
+	private Date signup;
 
 	public Long getId() {
 		return id;
@@ -52,6 +56,14 @@ public class UserDTO extends AbstractDTO<User> {
 	public void setStatus(Character status) {
 		this.status = status;
 	}
+	
+	public Date getSignup() {
+		return signup;
+	}
+
+	public void setSignup(Date signup) {
+		this.signup = signup;
+	}
 
 	public UserDTO withId(Long id) {
 		this.id = id;
@@ -65,6 +77,11 @@ public class UserDTO extends AbstractDTO<User> {
 
 	public UserDTO withStatus(Character status) {
 		this.status = status;
+		return this;
+	}
+	
+	public UserDTO withSignup(Date signup) {
+		this.signup = signup;
 		return this;
 	}
 
@@ -84,4 +101,5 @@ public class UserDTO extends AbstractDTO<User> {
 		userDTO.setLink(StringUtils.replace(UserURI.USER, "{" + UserURI.USER_ID + "}", String.valueOf(user.getId())));
 		return userDTO;
 	}
+
 }

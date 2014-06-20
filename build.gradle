@@ -70,5 +70,7 @@ project(':view') {
 	    compile "javax.ws.rs:javax.ws.rs-api:2.0"
 		compile "org.glassfish.jersey.containers:jersey-container-servlet:2.9"
 		compile "org.glassfish.jersey.core:jersey-client:2.9"
+		compile "com.fasterxml.jackson.module:jackson-module-jsonSchema:2.4.0"
+		compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.4.0"
     }
 }

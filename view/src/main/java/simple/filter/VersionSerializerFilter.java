@@ -3,6 +3,7 @@ package simple.filter;
 import java.lang.reflect.Field;
 
 import simple.annotations.JsonVersion;
+import simple.shared.LogHolder;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -58,10 +59,13 @@ public class VersionSerializerFilter implements PropertyFilter {
 		for (Field field : pojo.getClass().getDeclaredFields()) {
 			if (this.isVersionAnnotationPresent(field, writer) && VersionAllowedHolder.getInstance().getVersion() != null) {
 				if ((this.isNotToInclude(field)) || (this.isToExclude(field))) {
+					LogHolder.getLogger().debug("operation=JsonVersion, field={}, serializable={}", field.getName(), Boolean.FALSE);
 					return false;
 				}
+				break;
 			}
 		}
+		LogHolder.getLogger().debug("operation=JsonVersion, field={}, serializable={}", writer.getName(), Boolean.TRUE);
 		return true;
 	}
 }

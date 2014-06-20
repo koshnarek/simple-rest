@@ -71,9 +71,4 @@ public class Status extends AbstractStatus<Type, Status> {
 		}
 	}
 
-	@Override
-	public Character getCode() {
-		return this.getType() != null ? this.getType().getCode() : null;
-	}
-
 }

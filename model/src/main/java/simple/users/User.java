@@ -2,6 +2,7 @@ package simple.users;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,6 +39,9 @@ public class User extends AbstractDomain<UserDTO> implements Salvable<User>, Upd
 	@ManyToOne
 	@JoinColumn(name = "cod_user_status")
 	private Status status;
+	
+	@Column(name = "dat_signup")
+	private Date signup;
 
 	public Long getId() {
 		return id;
@@ -61,7 +65,7 @@ public class User extends AbstractDomain<UserDTO> implements Salvable<User>, Upd
 
 	public Character getStatus() {
 		if (status != null) {
-			return status.getCode();
+			return status.getId();
 		}
 		return null;
 	}
@@ -70,6 +74,14 @@ public class User extends AbstractDomain<UserDTO> implements Salvable<User>, Upd
 		this.status = new Status(code);
 	}
 	
+	public Date getSignup() {
+		return signup;
+	}
+
+	public void setSignup(Date signup) {
+		this.signup = signup;
+	}
+
 	public User withId(Long id) {
 		this.setId(id);
 		return this;
@@ -82,6 +94,11 @@ public class User extends AbstractDomain<UserDTO> implements Salvable<User>, Upd
 
 	public User withStatus(Character status) {
 		this.status = new Status(status);
+		return this;
+	}
+	
+	public User withSignup(Date signup) {
+		this.signup = signup;
 		return this;
 	}
 

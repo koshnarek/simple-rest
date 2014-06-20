@@ -5,6 +5,9 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -30,8 +33,9 @@ public class UserEndpointIntegrationTest {
 	@BeforeClass
 	public static void createUser() {
 		UserDTO userDTO = new UserDTO()
-			.withLogin("teste@teste.com")
-			.withStatus('A');
+				.withLogin("teste@teste.com")
+				.withStatus('A')
+				.withSignup(Date.from(LocalDateTime.now().atZone(ZoneId.of("Brazil/East")).toInstant()));
 		ClientBuilder.newClient()
 				.register(JacksonObjectMapperProvider.class)
 				.target(TARGET)
@@ -61,6 +65,7 @@ public class UserEndpointIntegrationTest {
 		assertThat(((Map<?, ?>) resource.getItem()).get("id"), is(1));
 		assertThat(((Map<?, ?>) resource.getItem()).get("login"), is(notNullValue()));
 		assertThat(((Map<?, ?>) resource.getItem()).get("status"), is(notNullValue()));
+		assertThat(((Map<?, ?>) resource.getItem()).get("signup"), is(notNullValue()));
 	}
 
 	@Test
@@ -85,6 +90,7 @@ public class UserEndpointIntegrationTest {
 		assertThat(((Map<?, ?>) resource.getItem()).get("id"), is(1));
 		assertThat(((Map<?, ?>) resource.getItem()).get("login"), is(nullValue()));
 		assertThat(((Map<?, ?>) resource.getItem()).get("status"), is(notNullValue()));
+		assertThat(((Map<?, ?>) resource.getItem()).get("signup"), is(notNullValue()));
 	}
 
 	@Test
@@ -109,6 +115,7 @@ public class UserEndpointIntegrationTest {
 		assertThat(((Map<?, ?>) resource.getItem()).get("id"), is(1));
 		assertThat(((Map<?, ?>) resource.getItem()).get("login"), is(notNullValue()));
 		assertThat(((Map<?, ?>) resource.getItem()).get("status"), is(notNullValue()));
+		assertThat(((Map<?, ?>) resource.getItem()).get("signup"), is(notNullValue()));
 	}
 
 	@Test
@@ -133,5 +140,6 @@ public class UserEndpointIntegrationTest {
 		assertThat(((Map<?, ?>) resource.getItem()).get("id"), is(1));
 		assertThat(((Map<?, ?>) resource.getItem()).get("login"), is(notNullValue()));
 		assertThat(((Map<?, ?>) resource.getItem()).get("status"), is(nullValue()));
+		assertThat(((Map<?, ?>) resource.getItem()).get("signup"), is(notNullValue()));
 	}
 }
