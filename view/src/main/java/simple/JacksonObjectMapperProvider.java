@@ -1,20 +1,16 @@
 package simple;
 
-import java.text.DateFormat;
-import java.time.ZoneId;
-import java.util.TimeZone;
-
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
 import simple.filter.VersionFilter;
 import simple.filter.VersionSerializerFilter;
+import simple.shared.DateFormatHolder;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 
 @Provider
@@ -37,9 +33,7 @@ public class JacksonObjectMapperProvider implements ContextResolver<ObjectMapper
 				.setSerializationInclusion(Include.NON_NULL)
 				.setFilters(new SimpleFilterProvider().addFilter(VersionFilter.NAME, new VersionSerializerFilter()));
 		result.registerModule(new JodaModule());
-		DateFormat df = new ISO8601DateFormat();
-		df.setTimeZone(TimeZone.getTimeZone(ZoneId.of("Brazil/East")));
-		result.setDateFormat(df);
+		result.setDateFormat(DateFormatHolder.get());
 		return result;
 	}
 }
