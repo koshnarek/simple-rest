@@ -8,17 +8,17 @@ import simple.shared.LogHolder;
 
 public class ErrorDTO extends AbstractDTO<Throwable> {
 
-	private Integer code;
+	private String code;
 
 	private String message;
 
 	private String stacktrace;
 
-	public Integer getCode() {
+	public String getCode() {
 		return code;
 	}
 
-	public void setCode(Integer code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 

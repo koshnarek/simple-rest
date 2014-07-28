@@ -4,26 +4,22 @@ import simple.base.Error;
 
 public enum UserError implements Error<Long> {
 
-	NOT_FOUND(1, "user %s not found"),
-	ALREADY_EXISTS(2, "user %s already exists"),
-	NOTTING_CHANGE(3, "user %s has not been modified"),
-	EMPTY_COLLECTION(4, "empty users on page"),
-	PAGE_PARAMETER_NULL(5, "page parameter not informed");
+	NOT_FOUND(Error.NOT_FOUND_MSG),
+	ALREADY_EXISTS(Error.ALREADY_EXISTS_MSG),
+	NOTTING_CHANGE(Error.NOTTING_CHANGE_MSG),
+	EMPTY_COLLECTION(Error.EMPTY_COLLECTION_MSG);
 
-	private Integer code;
-
-	private String message;
+	private final String message;
 
 	private Long userId;
 
-	UserError(Integer code, String message) {
-		this.code = code;
-		this.message = message;
+	UserError(String message) {
+		this.message = Error.messageForEntity(User.class, message);
 	}
 
 	@Override
-	public Integer getCode() {
-		return code;
+	public String getCode() {
+		return this.getCode(this.ordinal());
 	}
 
 	@Override
